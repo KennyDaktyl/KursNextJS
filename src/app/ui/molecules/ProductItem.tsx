@@ -1,18 +1,9 @@
 import { ProductImage } from "../atoms/ProductImage"
 import { ProductItemDescription } from "../atoms/ProductItemDescription"
+import type { ProductItemType } from "../types";
 
 type ProductItemProps = {
-    product: {
-        category: string;
-        name: string;
-        price: number;
-        imageCover: {
-            width: number;
-            height: number;
-            src: string;
-            alt: string;
-        };
-    };
+    product: ProductItemType;
 };
 
 export const ProductItem = ({ product }: ProductItemProps) => {

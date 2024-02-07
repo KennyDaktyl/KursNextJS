@@ -1,12 +1,12 @@
 import { ProductList } from "./ui/organism/ProductList";
-import { ProductItemType } from "./ui/types";
+import type { ProductItemType } from "./ui/types";
 
 const products: ProductItemType[] = [
 	{
 		id: "1",
 		category: "Klucze",
 		name: "Klucz mieszkaniowy WKE-1",
-		price: "1599",
+		price: 1599,
 		imageCover: {
 			width: 320,
             height: 320,
@@ -18,7 +18,7 @@ const products: ProductItemType[] = [
 		id: "2",
 		category: "Klucze",
 		name: "Klucz mieszkaniowy Energetyczny",
-		price: "3599",
+		price: 3599,
 		imageCover: {
 			width: 320,
             height: 320,
@@ -30,7 +30,7 @@ const products: ProductItemType[] = [
 		id: "3",
 		category: "Klucze",
 		name: "Klucz GERDA",
-		price: "6599",
+		price: 6599,
 		imageCover: {
 			width: 320,
             height: 320,
@@ -42,7 +42,7 @@ const products: ProductItemType[] = [
 		id: "4",
 		category: "Klucze",
 		name: "Klucz do kłódki",
-		price: "3599",
+		price: 3599,
 		imageCover: {
 			width: 320,
             height: 320,
