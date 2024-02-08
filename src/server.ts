@@ -3,13 +3,16 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { typeDefs } from "./graphql/typeDefs.generated.js";
 import { resolvers } from "./graphql/resolvers.generated.js";
 
-const server = new ApolloServer({
-	typeDefs,
-	resolvers,
-});
+async function startServer() {
+	const server = new ApolloServer({
+		typeDefs,
+		resolvers,
+	});
 
-const { url } = await startStandaloneServer(server, {
-	listen: { port: 4000 },
-});
+	const { url } = await startStandaloneServer(server, {
+		listen: { port: 4000 },
+	});
+	console.log(`🚀  Server ready at: ${url}`);
+}
 
-console.log(`🚀  Server ready at: ${url}`);
+startServer().catch((error) => console.error("Error starting server:", error));
