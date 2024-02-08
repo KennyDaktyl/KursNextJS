@@ -8,11 +8,11 @@ type ProductItemProps = {
 
 export const ProductItem = ({ product }: ProductItemProps) => {
     return (
-            <li>
-                <article>
-                    <ProductImage width={ product.imageCover.width } height={ product.imageCover.height } src={ product.imageCover.src } alt={ product.imageCover.alt } />
-                    <ProductItemDescription product={ product } />
-                </article>
-            </li>
+                    <li className="cursor-pointer">
+                        <article>
+                            <ProductImage width={ product.imageCover.width } height={ product.imageCover.height } src={ product.imageCover.src } alt={ product.imageCover.alt } />
+                            <ProductItemDescription product={ product } />
+                        </article>
+                    </li>
         )
 }

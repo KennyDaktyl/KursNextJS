@@ -9,9 +9,9 @@ const products: ProductItemType[] = [
 		price: 1599,
 		imageCover: {
 			width: 320,
-            height: 320,
-            src: "/klucz_1.webp",
-            alt: "Klucz mieszkaniowy",
+			height: 428,
+			src: "/klucz_1.webp",
+			alt: "Klucz mieszkaniowy",
 		},
 	},
 	{
@@ -21,9 +21,9 @@ const products: ProductItemType[] = [
 		price: 3599,
 		imageCover: {
 			width: 320,
-            height: 320,
-            src: "/klucz_2.webp",
-            alt: "Klucz energetyczny",
+			height: 428,
+			src: "/klucz_2.webp",
+			alt: "Klucz energetyczny",
 		},
 	},
 	{
@@ -33,9 +33,9 @@ const products: ProductItemType[] = [
 		price: 6599,
 		imageCover: {
 			width: 320,
-            height: 320,
-            src: "/klucz_3.webp",
-            alt: "Klucz GERDA",
+			height: 428,
+			src: "/klucz_3.webp",
+			alt: "Klucz GERDA",
 		},
 	},
 	{
@@ -45,18 +45,17 @@ const products: ProductItemType[] = [
 		price: 3599,
 		imageCover: {
 			width: 320,
-            height: 320,
-            src: "/klucz_4.webp",
-            alt: "Klucz do kłódki",
+			height: 428,
+			src: "/klucz_4.webp",
+			alt: "Klucz do kłódki",
 		},
 	},
-]
-
+];
 
 export default function Home() {
 	return (
 		<section className="mx-auto max-w-screen-2xl p-12">
-			<ProductList products={ products } />
+			<ProductList products={products} />
 		</section>
 	);
 }
