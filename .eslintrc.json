@@ -15,7 +15,6 @@
 	"rules": {
 		// sort imports
 		"import/order": "error",
-
 		// no let exports
 		"import/no-mutable-exports": "error",
 
@@ -31,7 +30,7 @@
 				}
 			}
 		],
-
+		"@typescript-eslint/no-explicit-any": "off",
 		"@typescript-eslint/consistent-type-imports": [
 			"error",
 			{

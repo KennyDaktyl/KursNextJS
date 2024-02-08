@@ -1,5 +1,5 @@
+import { formatMoney } from "../../../utils";
 import type { ProductItemType } from "../types";
-import { formatMoney } from "@/utils";
 
 type ProductItemDescriptionProps = {
 	product: ProductItemType;
