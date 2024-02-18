@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ProductImage } from "../atoms/ProductImage"
 import { ProductItemDescription } from "../atoms/ProductItemDescription"
 import type { ProductItemType } from "../types";
@@ -8,11 +9,13 @@ type ProductItemProps = {
 
 export const ProductItem = ({ product }: ProductItemProps) => {
     return (
-                    <li className="cursor-pointer">
-                        <article>
-                            <ProductImage width={ product.imageCover.width } height={ product.imageCover.height } src={ product.imageCover.src } alt={ product.imageCover.alt } />
-                            <ProductItemDescription product={ product } />
-                        </article>
-                    </li>
+        <li className="cursor-pointer">
+            <Link href={`/products/${product.id}`}>
+                <article>
+                    <ProductImage width={ product.imageCover.width } height={ product.imageCover.height } src={ product.imageCover.src } alt={ product.imageCover.alt } />
+                    <ProductItemDescription product={ product } />
+                </article>
+            </Link>
+        </li>
         )
 }
