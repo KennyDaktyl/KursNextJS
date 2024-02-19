@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 
 import { getProductById, getProductsList } from "@/api/products";
-import { ProductImage } from "@/app/ui/atoms/ProductImage";
-import { formatMoney } from "@/utils";
+import { ProductDetails } from "@/app/ui/molecules/ProductDetails";
 
 
 export const generateStaticParams = async () => {
@@ -29,25 +28,17 @@ export const generateMetadata = async({
     }
 };
 
-export default async function ProductDetails({
+export default async function ProductDetailsPage({
     params,
 }: {
         params: { productId: string };
     }) {
     
     const product = await getProductById(params.productId)
+    
     return (
-        <>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <ul>
-                    <h1>{product.name}</h1>
-                    <p className="text-sm font-medium text-gray-900">
-                        <span className="sr-only">Cena:</span>
-                        {formatMoney(product.price / 100)}
-                    </p>
-                    <ProductImage width={ product.imageCover.width } height={ product.imageCover.height } src={ product.imageCover.src } alt={ product.imageCover.alt } />
-                </ul>
-            </div>
-        </>
+        <div>
+            <ProductDetails product={ product }/>
+        </div>
     )
 }

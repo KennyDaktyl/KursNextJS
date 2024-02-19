@@ -21,10 +21,10 @@ export default function RootLayout({
 				<nav>
 					<ul className="mt-2 flex justify-center space-x-4">
 						<li>
-							<ActiveLink href="/">Home</ActiveLink>
+							<ActiveLink href="/" exact={true}>Home</ActiveLink>
 						</li>
 						<li>
-							<ActiveLink href="/products/1">All</ActiveLink>
+							<ActiveLink href="/products" exact={false}>All</ActiveLink>
 						</li>
 					</ul>
 				</nav>

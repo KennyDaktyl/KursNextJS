@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { ProductImage } from "../atoms/ProductImage"
 import { ProductItemDescription } from "../atoms/ProductItemDescription"
 import type { ProductItemType } from "../types";
+import { ActiveLink } from "../atoms/ActiveLink";
 
 type ProductItemProps = {
     product: ProductItemType;
@@ -16,12 +16,12 @@ export const ProductItem = ({ product }: ProductItemProps) => {
 
     return (
         <li className="cursor-pointer">
-            <Link href={href}>
+            <ActiveLink href={href}>
                 <article>
                     <ProductImage width={ product.imageCover.width } height={ product.imageCover.height } src={ product.imageCover.src } alt={ product.imageCover.alt } />
                     <ProductItemDescription product={ product } />
                 </article>
-            </Link>
+            </ActiveLink>
         </li>
         )
 }

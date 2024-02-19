@@ -18,7 +18,7 @@ export const ActiveLink = ({ href, children, exact = false }: ActiveLinkProps) =
     const resolvedHref = typeof href === 'string' ? { pathname: href } : href;
     let isActive = pathname === resolvedHref.pathname;
 
-    if (exact && resolvedHref.pathname) {
+    if (!exact && resolvedHref.pathname) {
         isActive = pathname.startsWith(resolvedHref.pathname);
     }
 
