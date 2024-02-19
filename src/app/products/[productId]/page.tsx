@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import { getProductById, getProductsList } from "@/api/products";
 import { ProductImage } from "@/app/ui/atoms/ProductImage";
-import { SuggestedProductsList } from "@/app/ui/organism/SuggestedProducts";
 import { formatMoney } from "@/utils";
 
 
@@ -50,10 +48,6 @@ export default async function ProductDetails({
                     <ProductImage width={ product.imageCover.width } height={ product.imageCover.height } src={ product.imageCover.src } alt={ product.imageCover.alt } />
                 </ul>
             </div>
-            <h2>Suggested products</h2>
-            <Suspense>
-                <SuggestedProductsList />
-            </Suspense>
         </>
     )
 }
