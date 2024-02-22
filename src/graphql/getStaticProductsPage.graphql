@@ -1,0 +1,11 @@
+query getStaticProductsPage($take: Int) {
+	products(take: $take) {
+		data {
+			categories {
+				slug
+			}
+			id
+			slug
+		}
+	}
+}

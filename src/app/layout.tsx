@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
-import { ActiveLink } from "./ui/atoms/ActiveLink";
+import { NavBar } from "./ui/organism/NavBar";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({
+	subsets: ["latin", "latin-ext"],
+});
 
 export const metadata: Metadata = {
 	title: "Lista produktów",
@@ -16,18 +18,9 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="pl">
-			<body className={inter.className}>
-				<nav>
-					<ul className="mt-2 flex justify-center space-x-4">
-						<li>
-							<ActiveLink href="/" exact={true}>Home</ActiveLink>
-						</li>
-						<li>
-							<ActiveLink href="/products" exact={false}>All</ActiveLink>
-						</li>
-					</ul>
-				</nav>
+		<html lang="en">
+			<body className={montserrat.className}>
+				<NavBar />
 				<section className="mx-auto max-w-md p-12 sm:max-w-2xl sm:py-16 md:max-w-4xl lg:max-w-7xl">
 					{children}
 				</section>

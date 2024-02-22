@@ -1,0 +1,21 @@
+query ProductsGetByCategorySlug($slug: String!) {
+	category(slug: $slug) {
+		products {
+			id
+			images {
+				alt
+				url
+			}
+			name
+			price
+			slug
+			categories {
+				name
+				slug
+				id
+			}
+		}
+		name
+		slug
+	}
+}

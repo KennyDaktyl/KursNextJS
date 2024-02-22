@@ -21,14 +21,14 @@ export const ActiveLink = ({ href, children, exact = false }: ActiveLinkProps) =
     if (!exact && resolvedHref.pathname) {
         isActive = pathname.startsWith(resolvedHref.pathname);
     }
-
+    
     return (
         <Link
             href={resolvedHref}
             className={clsx('text-blue-400 hover:text-blue-600', isActive && 'underline')}
             aria-current={isActive ? 'page' : undefined}
             >
-                {children}
+                {children}{isActive}
         </Link>
     );
 };

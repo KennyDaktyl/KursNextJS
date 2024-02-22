@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
 
-import { getProductById, getProductsList } from "@/api/products";
 import { ProductDetails } from "@/app/ui/molecules/ProductDetails";
+import { getProductById, getProductIdForStaticPage } from "@/api/products";
+import type { ProductIdForStaticPageType } from "@/app/ui/types";
 
 
 export const generateStaticParams = async () => {
-    const products = await getProductsList();
-    return products.map((product) => ({
-        productId: product.id
-    }))
- };
+    const products = await getProductIdForStaticPage(8); 
+
+    return products.map((product: ProductIdForStaticPageType) => ({
+            pageNumberOrCategory: product.category.slug,
+            productPath: product.slug,
+            productId: product.id,
+
+    }));
+};
 
 export const generateMetadata = async({
     params,
@@ -23,7 +28,7 @@ export const generateMetadata = async({
         openGraph: {
             title: `Produkt ${product.name}`,
             description: product.description,
-            images: [product.imageCover.src],
+            images: [product.images.url],
         }
     }
 };
@@ -37,8 +42,8 @@ export default async function ProductDetailsPage({
     const product = await getProductById(params.productId)
     
     return (
-        <div>
+        <>
             <ProductDetails product={ product }/>
-        </div>
+        </>
     )
 }

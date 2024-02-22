@@ -1,7 +1,7 @@
 import { ProductItem } from "../molecules/ProductItem";
-import type { ProductItemType } from "../types";
+import type { ProductOnListItemType } from "../types";
 
-export const ProductList = ({ products }: { products: ProductItemType[] }) => {
+export const ProductList = ({ products }: { products: ProductOnListItemType[] }) => {
 	return (
 		<ul
 			data-testid="products-list"

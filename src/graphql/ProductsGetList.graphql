@@ -1,0 +1,21 @@
+query ProductsGetList($take: Int = 8, $skip: Int = 0) {
+	products(take: $take, skip: $skip) {
+		data {
+			slug
+			name
+			price
+			id
+			images {
+				url
+				alt
+				height
+				width
+			}
+			categories {
+				name
+				slug
+				id
+			}
+		}
+	}
+}

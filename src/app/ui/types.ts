@@ -1,13 +1,39 @@
 export type ProductItemType = {
 	id: string;
-	category: string;
+	category: {
+		slug: string;
+		name: string;
+	};
 	name: string;
+	slug: string;
 	price: number;
-	imageCover: {
-		width: number;
-		height: number;
-		src: string;
+	description: string,
+	images: {
+		url: string;
 		alt: string;
 	};
-	description: string;
+};
+
+export type ProductOnListItemType = {
+	id: string;
+	category: {
+		slug: string;
+		name: string;
+		id: string;
+	};
+	name: string;
+	slug: string;
+	price: number;
+	images: {
+		url: string;
+		alt: string;
+	};
+};
+
+export type ProductIdForStaticPageType = {
+	id: string;
+	slug: string;
+	category: {
+		slug: string;
+	};
 };

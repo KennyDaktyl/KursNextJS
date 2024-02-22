@@ -1,48 +1,139 @@
-import type { ProductItemType } from "@/app/ui/types";
+import { notFound } from "next/navigation";
+import { executeGraphql } from "./graphqlApi";
 
-type ProductResponseItem = {
-		id: string;
-		title: string;
-		price: number;
-		description: string;
-		category: string;
-		rating: {
-			rate: number;
-			count: number;
-		}
-		image: string;
-		longDescription: string;
-}
+import type { ProductIdForStaticPageType, ProductItemType, ProductOnListItemType } from "@/app/ui/types";
+import { GetProductByIdDocument, GetStaticProductsPageDocument, ProductsGetByCategorySlugDocument, ProductsGetListDocument } from "@/gql/graphql";
+
+
+export const getProductsByCategorySlug = async (categorySlug: string,
+): Promise<ProductOnListItemType[]> => {
+    const category = await executeGraphql(
+        ProductsGetByCategorySlugDocument,
+        { slug: categorySlug }
+    );
+
+    if (!category.category) {
+        throw notFound();
+    }
+
+    return category.category.products.map(mapProductsListResponseItemToProductItemType);
+};
+
+
+export const getProductsList = async (itemCount: number, offset: number): Promise<ProductOnListItemType[]> => {
     
-export const getProductsList = async (offset: number = 0, take: number = 20): Promise<ProductItemType[]> => {
-    const url = `https://naszsklep-api.vercel.app/api/products?offset=${offset}&take=${take}`;
-    const res = await fetch(url);
-    const productsResponse = (await res.json()) as ProductResponseItem[];
-    const products = productsResponse.map(productResponseItemToProductItemType);
-    return products;
+	const response = await executeGraphql(
+		ProductsGetListDocument,
+		{ take: itemCount, skip: offset }
+	);
+	
+	return response.products.data.map(mapProductsListResponseItemToProductItemType);
 };
 
-export const getProductById = async (id: ProductResponseItem["id"]) => {
-    const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`)
-    const productResponse = (await res.json()) as ProductResponseItem;
-    return productResponseItemToProductItemType(productResponse);
+export const getProductById = async (productId: string) => {
+	const productResponse = await executeGraphql(GetProductByIdDocument, { id: productId });
+  
+	if (!productResponse.product) {
+	  throw notFound();
+	}
+  
+	const productData = productResponse.product;
+  
+	return productResponseItemToProductItemType(productData);
 };
 
+export const getProductIdForStaticPage = async (take: number): Promise<ProductIdForStaticPageType[]> => {
+    const response = await executeGraphql(
+        GetStaticProductsPageDocument,
+        { take: take }
+    );
+    return response.products.data.map(mapProductsListIdResponseItemToProductItemType);
+}
+
+/*Products List */
+interface ProductsListItemData {
+    id: string;
+    name: string;
+    slug: string;
+    price: number;
+    images: {
+        url: string;
+        alt: string;
+    }[];
+    categories: {
+        name: string;
+        slug: string;
+        id: string;
+    }[];
+}
+
+const mapProductsListResponseItemToProductItemType = (productData: ProductsListItemData): ProductOnListItemType => ({
+    id: productData.id,
+    category: {
+        slug: productData.categories[0]?.slug || '',
+        name: productData.categories[0]?.name || '',
+        id: productData.categories[0]?.id,
+    },
+    name: productData.name,
+    price: productData.price,
+    slug: productData.slug,
+    images: {
+        url: productData.images[0]?.url || '',
+        alt: productData.images[0]?.alt || '',
+    },
+});
+
+
+/*Product */
+interface ProductResponseItem {
+	description: string;
+	id: string;
+	name: string;
+	price: number;
+	slug: string;
+	images: { url: string; alt: string; }[];
+	collections: { id: string; name: string; slug: string; description: string; }[];
+	categories: {
+		id: string;
+		slug: string;
+		name: string;
+		description: string;
+	  }[]; 
+}
+  
 const productResponseItemToProductItemType = (
-    product: ProductResponseItem,
+    productData: ProductResponseItem,
 ): ProductItemType => {
     return {
-        id: product.id,
-		name: product.title,
-		category: product.category,
-		price: product.price,
-		imageCover: {
-			width: 320,
-			height: 428,
-			alt: product.title,
-			src: product.image,
-			
+		id: productData.id,
+		category: {
+		  slug: productData.categories[0].slug || "",
+		  name: productData.categories[0].name || "",
 		},
-		description: product.description
-    }
+		name: productData.name,
+        description: productData.description,
+		price: productData.price,
+		slug: productData.slug,
+		images: {
+		  url: productData.images[0]?.url || "",
+		  alt: productData.images[0]?.alt || "",
+		},
+	};
 };
+
+/* List Id for static page */
+interface ProductsListIdResponseItem {
+	id: string;
+    slug: string;
+    categories: {
+        slug: string;
+    }[];
+};
+
+const mapProductsListIdResponseItemToProductItemType = (productData: ProductsListIdResponseItem): ProductIdForStaticPageType => ({
+    id: productData.id,
+    category: {
+        slug: productData.categories[0]?.slug || '',
+    },
+    slug: productData.slug,
+});

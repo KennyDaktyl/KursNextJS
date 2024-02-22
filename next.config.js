@@ -4,17 +4,32 @@ const nextConfig = {
     pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
     experimental: {
         typedRoutes: true,
-        mdxRs: true
+        mdxRs: true,
     },
     images: {
-        domains: ['naszsklep-api.vercel.app'],
+        domains: ['naszsklep-api.vercel.app', 'localhost:3000', 'static-ourstore.hyperfunctor.com'],
     },
-    async redirects() {
+    redirects: async () => {
         return [
             {
                 source: '/products',
                 destination: '/products/1',
                 permanent: true,
+            },
+            {
+                source: '/categories/t-shirts',
+                destination: '/categories/t-shirts/1',
+                permanent: false,
+            },
+            {
+                source: '/categories/hoodies',
+                destination: '/categories/hoodies/1',
+                permanent: false,
+            },
+            {
+                source: '/categories/accessories',
+                destination: '/categories/accessories/1',
+                permanent: false,
             },
         ];
     },
