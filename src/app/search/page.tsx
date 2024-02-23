@@ -1,17 +1,14 @@
 'use client'
  
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { ProductList } from '../ui/organism/ProductList';
-import type { ProductOnListItemType } from '../ui/types';
+import { ProductList } from '../../app/ui/organism/ProductList';
+import type { ProductOnListItemType } from '../../app/ui/types';
 import { getProductsBySearch } from '@/api/products';
 
-
-export default function SearchBar() {
-    const searchParams = useSearchParams();
-    const search = searchParams.get('query');
+export default function SearchProductsPage() {
+    const [search, setSearch] = useState<string | null>(null);
     const [products, setProducts] = useState<ProductOnListItemType[]>([]); 
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -24,10 +21,17 @@ export default function SearchBar() {
             }
         };
 
-        fetchData().catch(error => {
-            console.error('Error fetching products:', error);
-        });
+        if (search) {
+            fetchData().catch(error => {
+                console.error('Error fetching products:', error);
+            });
+        }
     }, [search]);
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+        setSearch(searchParams.get('query'));
+    }, []);
 
     return (
         <>

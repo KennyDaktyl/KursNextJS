@@ -1,38 +1,38 @@
-import type { TypedDocumentString } from "@/gql/graphql";
+    import type { TypedDocumentString } from "@/gql/graphql";
 
 
-export const executeGraphql = async <TResult, TVariables>(
-    query: TypedDocumentString<TResult, TVariables>,
-    variables: TVariables,
-): Promise<TResult> => {
-    // if (!process.env.GRAPHQL_URL) {
-    //     throw TypeError("GRAPHQL_URL is not defined");
-    // }
-    const res = await fetch("https://graphql.hyperfunctor.com/graphql", {
-        method: "POST",
-        body: JSON.stringify({
-            query,
-            variables
-        }),
-        headers: {
-            "Content-Type": "application/json",
+    export const executeGraphql = async <TResult, TVariables>(
+        query: TypedDocumentString<TResult, TVariables>,
+        variables: TVariables,
+    ): Promise<TResult> => {
+        if (!process.env.GRAPHQL_URL) {
+            throw TypeError("GRAPHQL_URL is not defined");
         }
-    });
+        const res = await fetch(process.env.GRAPHQL_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                query,
+                variables
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
 
-    type GraphqlResponse<T> = 
-	| { data?: undefined; errors: { message: string }[]}
-	| { data: T; errors?: undefined };
+        type GraphqlResponse<T> = 
+        | { data?: undefined; errors: { message: string }[]}
+        | { data: T; errors?: undefined };
 
-    const graphqlResponse = 
-        (await res.json()) as GraphqlResponse<TResult>;
+        const graphqlResponse = 
+            (await res.json()) as GraphqlResponse<TResult>;
 
-	if (graphqlResponse.errors) {
-        throw new TypeError(`GraphQL Error: ${graphqlResponse.errors?.[0]?.message || "Unknown error"}`);
+        if (graphqlResponse.errors) {
+            throw new TypeError(`GraphQL Error: ${graphqlResponse.errors?.[0]?.message || "Unknown error"}`);
+        }
+
+        if (!graphqlResponse.data) {
+            throw new Error("GraphQL Response data is null");
+        }
+
+        return graphqlResponse.data
     }
-
-    if (!graphqlResponse.data) {
-        throw new Error("GraphQL Response data is null");
-    }
-
-    return graphqlResponse.data
-}
