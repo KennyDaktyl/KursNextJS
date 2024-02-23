@@ -4,6 +4,12 @@ export type ProductItemType = {
 		slug: string;
 		name: string;
 	};
+	collections: {
+		slug: string;
+		name: string;
+		id: string;
+		description: string,
+	};
 	name: string;
 	slug: string;
 	price: number;

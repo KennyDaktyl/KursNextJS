@@ -30,5 +30,9 @@ export const executeGraphql = async <TResult, TVariables>(
         throw new TypeError(`GraphQL Error: ${graphqlResponse.errors?.[0]?.message || "Unknown error"}`);
     }
 
+    if (!graphqlResponse.data) {
+        throw new Error("GraphQL Response data is null");
+    }
+
     return graphqlResponse.data
 }

@@ -298,6 +298,23 @@ export type ProductsGetListQueryVariables = Exact<{
 
 export type ProductsGetListQuery = { products: { data: Array<{ slug: string, name: string, price: number, id: string, images: Array<{ url: string, alt: string, height: number, width: number }>, categories: Array<{ name: string, slug: string, id: string }> }> } };
 
+export type GetCategoriesSlugQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesSlugQuery = { categories: { data: Array<{ slug: string }> } };
+
+export type GetCollectionProductsBySlugQueryVariables = Exact<{
+  slug?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetCollectionProductsBySlugQuery = { collection?: { id: string, name: string, slug: string, description: string, products: Array<{ id: string, name: string, price: number, slug: string, categories: Array<{ name: string, slug: string, id: string }>, images: Array<{ url: string, alt: string }> }> } | null };
+
+export type GetTotalProductsCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTotalProductsCountQuery = { products: { meta: { total: number } } };
+
 export type GetStaticProductsPageQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Int']['input']>;
 }>;
@@ -342,6 +359,12 @@ export const GetProductByIdDocument = new TypedDocumentString(`
       id
       slug
       name
+      description
+    }
+    collections {
+      slug
+      name
+      id
       description
     }
   }
@@ -393,6 +416,49 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
+export const GetCategoriesSlugDocument = new TypedDocumentString(`
+    query GetCategoriesSlug {
+  categories {
+    data {
+      slug
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetCategoriesSlugQuery, GetCategoriesSlugQueryVariables>;
+export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
+    query getCollectionProductsBySlug($slug: String = "") {
+  collection(slug: $slug) {
+    id
+    name
+    slug
+    description
+    products {
+      id
+      name
+      price
+      slug
+      categories {
+        name
+        slug
+        id
+      }
+      images {
+        url
+        alt
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetCollectionProductsBySlugQuery, GetCollectionProductsBySlugQueryVariables>;
+export const GetTotalProductsCountDocument = new TypedDocumentString(`
+    query GetTotalProductsCount {
+  products {
+    meta {
+      total
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetTotalProductsCountQuery, GetTotalProductsCountQueryVariables>;
 export const GetStaticProductsPageDocument = new TypedDocumentString(`
     query getStaticProductsPage($take: Int) {
   products(take: $take) {

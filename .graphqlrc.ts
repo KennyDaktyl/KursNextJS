@@ -10,7 +10,7 @@ const config: CodegenConfig = {
     "src/gql/": {
       preset: "client",
       presetConfig: {
-        fragmentMasking: { unmaskFunctionName: "getFragmentData" }
+        fragmentMasking: false
       },
       config: {
         defaultScalarType: "unknown",

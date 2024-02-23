@@ -1,0 +1,7 @@
+query GetTotalProductsCount {
+	products {
+		meta {
+			total
+		}
+	}
+}

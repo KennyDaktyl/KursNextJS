@@ -21,5 +21,11 @@ query GetProductById($id: ID!) {
 			name
 			description
 		}
+		collections {
+			slug
+			name
+			id
+			description
+		}
 	}
 }

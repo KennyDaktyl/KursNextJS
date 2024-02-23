@@ -2,11 +2,10 @@ import { notFound } from "next/navigation";
 import { executeGraphql } from "./graphqlApi";
 
 import type { ProductIdForStaticPageType, ProductItemType, ProductOnListItemType } from "@/app/ui/types";
-import { GetProductByIdDocument, GetStaticProductsPageDocument, ProductsGetByCategorySlugDocument, ProductsGetListDocument } from "@/gql/graphql";
+import { GetProductByIdDocument, GetStaticProductsPageDocument, GetTotalProductsCountDocument, ProductsGetByCategorySlugDocument, ProductsGetListDocument } from "@/gql/graphql";
 
 
-export const getProductsByCategorySlug = async (categorySlug: string,
-): Promise<ProductOnListItemType[]> => {
+export const getProductsByCategorySlug = async (categorySlug: string ) => {
     const category = await executeGraphql(
         ProductsGetByCategorySlugDocument,
         { slug: categorySlug }
@@ -20,14 +19,19 @@ export const getProductsByCategorySlug = async (categorySlug: string,
 };
 
 
-export const getProductsList = async (itemCount: number, offset: number): Promise<ProductOnListItemType[]> => {
+export const getProductsList = async (itemCount: number, offset: number) => {
     
-	const response = await executeGraphql(
-		ProductsGetListDocument,
-		{ take: itemCount, skip: offset }
-	);
-	
-	return response.products.data.map(mapProductsListResponseItemToProductItemType);
+	try {
+        const response = await executeGraphql(
+            ProductsGetListDocument,
+            { take: itemCount, skip: offset }
+        );
+        
+        return response.products.data.map(mapProductsListResponseItemToProductItemType);
+    } catch (error) {
+        console.error("GraphQL Error:", (error as Error).message);
+        return [];
+    }
 };
 
 export const getProductById = async (productId: string) => {
@@ -50,6 +54,15 @@ export const getProductIdForStaticPage = async (take: number): Promise<ProductId
     return response.products.data.map(mapProductsListIdResponseItemToProductItemType);
 }
 
+export const getProductsCount = async () => {
+    const response = await executeGraphql(
+        GetTotalProductsCountDocument,
+        { }
+    );
+    return response.products.meta.total;
+}
+
+
 /*Products List */
 interface ProductsListItemData {
     id: string;
@@ -67,7 +80,7 @@ interface ProductsListItemData {
     }[];
 }
 
-const mapProductsListResponseItemToProductItemType = (productData: ProductsListItemData): ProductOnListItemType => ({
+export const mapProductsListResponseItemToProductItemType = (productData: ProductsListItemData): ProductOnListItemType => ({
     id: productData.id,
     category: {
         slug: productData.categories[0]?.slug || '',
@@ -110,6 +123,12 @@ const productResponseItemToProductItemType = (
 		  slug: productData.categories[0].slug || "",
 		  name: productData.categories[0].name || "",
 		},
+        collections: {
+            slug: productData.collections[0]?.slug || "",
+            name: productData.collections[0]?.name || "",
+            id: productData.collections[0]?.id || "",
+            description: productData.collections[0]?.description || "",
+        },
 		name: productData.name,
         description: productData.description,
 		price: productData.price,

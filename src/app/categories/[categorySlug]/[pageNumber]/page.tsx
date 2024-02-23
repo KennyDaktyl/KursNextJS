@@ -1,16 +1,15 @@
 import { ProductList } from "@/app/ui/organism/ProductList";
 import { getProductsByCategorySlug } from "@/api/products";
+import { GetCategoriesSlug } from "@/api/categories";
 
-export const generateStaticParams = async ({
-    params,
-}: {
-    params: { category: string};
-}) => {
-    if (params.category === "t-shirts") {
-        return [{ pageNumber: "1" }, { pageNumber: "2" }];
-    } else {
-        return [{ pageNumber: "1" }]
-    }
+
+export const generateStaticParams = async () => {
+    
+    const categories = await GetCategoriesSlug();
+    return categories.map(category => ({ 
+        categorySlug: category.slug,
+        pageNumber: "1"
+    }));
 }
 
 
