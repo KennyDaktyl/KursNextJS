@@ -322,6 +322,13 @@ export type GetStaticProductsPageQueryVariables = Exact<{
 
 export type GetStaticProductsPageQuery = { products: { data: Array<{ id: string, slug: string, categories: Array<{ slug: string }> }> } };
 
+export type SearchProductsQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SearchProductsQuery = { products: { data: Array<{ slug: string, name: string, price: number, id: string, images: Array<{ url: string, alt: string, height: number, width: number }>, categories: Array<{ name: string, slug: string, id: string }> }> } };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -472,3 +479,26 @@ export const GetStaticProductsPageDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetStaticProductsPageQuery, GetStaticProductsPageQueryVariables>;
+export const SearchProductsDocument = new TypedDocumentString(`
+    query SearchProducts($search: String = "") {
+  products(search: $search) {
+    data {
+      slug
+      name
+      price
+      id
+      images {
+        url
+        alt
+        height
+        width
+      }
+      categories {
+        name
+        slug
+        id
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<SearchProductsQuery, SearchProductsQueryVariables>;

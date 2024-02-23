@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { executeGraphql } from "./graphqlApi";
 
 import type { ProductIdForStaticPageType, ProductItemType, ProductOnListItemType } from "@/app/ui/types";
-import { GetProductByIdDocument, GetStaticProductsPageDocument, GetTotalProductsCountDocument, ProductsGetByCategorySlugDocument, ProductsGetListDocument } from "@/gql/graphql";
+import { GetProductByIdDocument, GetStaticProductsPageDocument, GetTotalProductsCountDocument, ProductsGetByCategorySlugDocument, ProductsGetListDocument, SearchProductsDocument } from "@/gql/graphql";
 
 
 export const getProductsByCategorySlug = async (categorySlug: string ) => {
@@ -60,6 +60,15 @@ export const getProductsCount = async () => {
         { }
     );
     return response.products.meta.total;
+}
+
+export const getProductsBySearch = async ( search: string ) => {
+    const response = await executeGraphql(
+        SearchProductsDocument,
+        { search: search }
+    )
+    
+    return response.products.data.map(mapProductsListResponseItemToProductItemType)
 }
 
 

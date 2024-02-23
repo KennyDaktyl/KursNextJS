@@ -21,6 +21,7 @@ const documents = {
     "query getCollectionProductsBySlug($slug: String = \"\") {\n  collection(slug: $slug) {\n    id\n    name\n    slug\n    description\n    products {\n      id\n      name\n      price\n      slug\n      categories {\n        name\n        slug\n        id\n      }\n      images {\n        url\n        alt\n      }\n    }\n  }\n}": types.GetCollectionProductsBySlugDocument,
     "query GetTotalProductsCount {\n  products {\n    meta {\n      total\n    }\n  }\n}": types.GetTotalProductsCountDocument,
     "query getStaticProductsPage($take: Int) {\n  products(take: $take) {\n    data {\n      categories {\n        slug\n      }\n      id\n      slug\n    }\n  }\n}": types.GetStaticProductsPageDocument,
+    "query SearchProducts($search: String = \"\") {\n  products(search: $search) {\n    data {\n      slug\n      name\n      price\n      id\n      images {\n        url\n        alt\n        height\n        width\n      }\n      categories {\n        name\n        slug\n        id\n      }\n    }\n  }\n}": types.SearchProductsDocument,
 };
 
 /**
@@ -51,6 +52,10 @@ export function graphql(source: "query GetTotalProductsCount {\n  products {\n  
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query getStaticProductsPage($take: Int) {\n  products(take: $take) {\n    data {\n      categories {\n        slug\n      }\n      id\n      slug\n    }\n  }\n}"): typeof import('./graphql').GetStaticProductsPageDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query SearchProducts($search: String = \"\") {\n  products(search: $search) {\n    data {\n      slug\n      name\n      price\n      id\n      images {\n        url\n        alt\n        height\n        width\n      }\n      categories {\n        name\n        slug\n        id\n      }\n    }\n  }\n}"): typeof import('./graphql').SearchProductsDocument;
 
 
 export function graphql(source: string) {
