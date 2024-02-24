@@ -27,3 +27,7 @@ body {
 		text-wrap: balance;
 	}
 }
+
+.h-60 {
+	height: 60px;
+}

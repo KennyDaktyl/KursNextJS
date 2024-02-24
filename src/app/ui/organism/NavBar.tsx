@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import { ShoppingCart } from 'lucide-react';
 import { ActiveLink } from "../atoms/ActiveLink";
 
 type NavLink = {
@@ -49,14 +50,17 @@ export function NavBar(): JSX.Element {
     };
 
     return (
-        <nav>
-            <ul className="mt-2 flex justify-center space-x-4">
+    <nav className="bg-white h-60">
+        <div className="flex justify-between items-center mx-auto max-w-md px-12 lg:max-w-7xl h-full">
+            <ul className="flex space-x-4 h-full">
                 {NavLinks.map((link, index) => (
-                    <li key={index}>
+                    <li key={index} className="w-32 text-center	border-b-2 border-transparent hover:border-red-500 flex items-center">
                         <ActiveLink href={link.href} exact={link.exact}>{link.label}</ActiveLink>
                     </li>
                 ))}
-                <form id="searchForm" method="GET" action="/search" onSubmit={handleSubmit}>
+            </ul>
+            <ul className="flex items-center">
+                <form id="searchForm" method="GET" action="/search" onSubmit={handleSubmit} className="flex bg-white border border-gray-300 rounded-full">
                     <input 
                         type="text" 
                         name="query"
@@ -65,9 +69,12 @@ export function NavBar(): JSX.Element {
                         value={searchQuery}
                         onChange={handleSearchInput}
                         onKeyUp={handleKeyUp}
+                        className="bg-white text-gray-700 px-3 py-1 rounded-full focus:outline-none"
                     />
                 </form>
+                <ShoppingCart className='ml-4 h-6 w-6 flex-shrink' aria-hidden="true"/>
             </ul>
-        </nav>
+        </div>
+    </nav>
     );
 }
