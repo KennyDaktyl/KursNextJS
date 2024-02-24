@@ -5,13 +5,31 @@ import { ProductList } from "@/app/ui/organism/ProductList";
 import Pagination from "@/app/ui/atoms/Pagination";
 
 
+const productsPerPage = 8;
+
+
+export const generateStaticParams = async () => {
+    
+    const numberPageToStatic = [1, 2]
+    const totalProducts = await getProductsCount();
+    const pagesNeeded = Math.ceil(totalProducts / productsPerPage);
+
+    if (pagesNeeded > 1) {
+        return numberPageToStatic.map((pageNumber) => {
+            return {"pageNumberOrCategory": pageNumber.toString()};
+        });
+    } else {
+        return [{"pageNumberOrCategory": "1"}];
+    }
+}
+
+
 export default async function ProductsPage({params}: {params: { pageNumberOrCategory: string }}) {
 
     const pageNumber = parseInt(params.pageNumberOrCategory);
-    const itemCount = 8;
-    const offset = (pageNumber - 1) * itemCount;
+    const offset = (pageNumber - 1) * productsPerPage;
 
-	const products = await getProductsList(itemCount, offset);
+	const products = await getProductsList(productsPerPage, offset);
     const totalProducts = await getProductsCount();
 
     if (products.length === 0) {
@@ -25,7 +43,7 @@ export default async function ProductsPage({params}: {params: { pageNumberOrCate
                 <Pagination
                     currentPage={pageNumber}
                     totalProducts={totalProducts}
-                    itemsPerPage={itemCount}
+                    itemsPerPage={productsPerPage}
                 />
 			</section>
         </>
