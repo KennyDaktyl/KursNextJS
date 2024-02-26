@@ -1,4 +1,5 @@
-    import type { TypedDocumentString } from "@/gql/graphql";
+import { notFound } from "next/navigation";
+import type { TypedDocumentString } from "@/gql/graphql";
 
 
     export const executeGraphql = async <TResult, TVariables>(
@@ -27,7 +28,9 @@
             (await res.json()) as GraphqlResponse<TResult>;
 
         if (graphqlResponse.errors) {
-            throw new TypeError(`GraphQL Error: ${graphqlResponse.errors?.[0]?.message || "Unknown error"}`);
+            console.log(`GraphQL Error: ${graphqlResponse.errors?.[0]?.message || "Unknown error"}`);
+            throw notFound();
+            // throw new TypeError(`GraphQL Error: ${graphqlResponse.errors?.[0]?.message || "Unknown error"}`);
         }
 
         if (!graphqlResponse.data) {

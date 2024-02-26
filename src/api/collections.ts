@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { executeGraphql } from "./graphqlApi";
 import { mapProductsListResponseItemToProductItemType } from "./products";
-import { GetCollectionProductsBySlugDocument, GetCollectionsDocument } from "@/gql/graphql";
+import { GetCollectionBySlugDocument, GetCollectionProductsBySlugDocument, GetCollectionsDocument } from "@/gql/graphql";
 
 
 export const getCollections = async () => {
@@ -36,3 +36,16 @@ export const getCollectionProductsBySlug = async (collectionSlug: string ) => {
         }
     }
 };
+
+export const getCollectionBySlug = async (collectionSlug: string ) => {
+    const response = await executeGraphql(
+        GetCollectionBySlugDocument,
+        { slug: collectionSlug }
+    );
+
+    if (!response.collection) {
+        throw notFound();
+    }
+
+    return response.collection;
+}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
-
 import { ProductDetails } from "@/app/ui/molecules/ProductDetails";
 import { getProductById, getProductIdForStaticPage } from "@/api/products";
 import type { ProductIdForStaticPageType, ProductOnListItemType } from "@/app/ui/types";
@@ -13,7 +13,6 @@ export const generateStaticParams = async () => {
 
     return products.map((product: ProductIdForStaticPageType) => ({
             productId: product.id,
-
     }));
 };
 
@@ -50,6 +49,10 @@ export default async function ProductDetailsPage({
     params: { productId: string };
 }) {
     const product = await getProductById(params.productId);
+
+    if (!product) {
+        throw notFound();
+    }
     let collection_data: CollectionResponse = { products: [], collection: {"name": "", "description": "", "slug": "", "id": ""} };
 
     if (product.collections.slug) {

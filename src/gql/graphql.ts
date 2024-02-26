@@ -303,6 +303,13 @@ export type GetCategoriesSlugQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCategoriesSlugQuery = { categories: { data: Array<{ slug: string }> } };
 
+export type GetCollectionBySlugQueryVariables = Exact<{
+  slug?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetCollectionBySlugQuery = { collection?: { name: string, slug: string, description: string, id: string } | null };
+
 export type GetCollectionProductsBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -438,6 +445,16 @@ export const GetCategoriesSlugDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetCategoriesSlugQuery, GetCategoriesSlugQueryVariables>;
+export const GetCollectionBySlugDocument = new TypedDocumentString(`
+    query GetCollectionBySlug($slug: String = "") {
+  collection(slug: $slug) {
+    name
+    slug
+    description
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<GetCollectionBySlugQuery, GetCollectionBySlugQueryVariables>;
 export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
     query getCollectionProductsBySlug($slug: String = "") {
   collection(slug: $slug) {

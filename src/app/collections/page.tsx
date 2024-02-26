@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import { ActiveLink } from "../ui/atoms/ActiveLink";
 import { getCollections } from "@/api/collections";
+
+
+export const generateMetadata = async(): Promise<Metadata> => {
+    return {
+        title: "Collections",
+        description: "Collections",
+    }
+};
 
 
 export default async function CollectionProductsPage() {

@@ -42,15 +42,20 @@ export const getProductsList = async (itemCount: number, offset: number) => {
 };
 
 export const getProductById = async (productId: string) => {
-	const productResponse = await executeGraphql(GetProductByIdDocument, { id: productId });
-  
-	if (!productResponse.product) {
-	  throw notFound();
-	}
-  
-	const productData = productResponse.product;
-  
-	return productResponseItemToProductItemType(productData);
+	try {
+        const productResponse = await executeGraphql(GetProductByIdDocument, { id: productId });
+
+        if (!productResponse.product) {
+            throw notFound();
+        }
+
+        const productData = productResponse.product;
+
+        return productResponseItemToProductItemType(productData);
+    } catch (error) {
+        console.error('Error while fetching product by ID:', error);
+        throw error;
+    }
 };
 
 export const getProductIdForStaticPage = async (take: number): Promise<ProductIdForStaticPageType[]> => {

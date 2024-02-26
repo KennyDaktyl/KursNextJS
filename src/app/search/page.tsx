@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { ProductList } from '../../app/ui/organism/ProductList';
 import { getProductsBySearch } from '@/api/products';
 
@@ -10,6 +11,14 @@ interface SearchParams {
 interface Props {
     searchParams: SearchParams;
 }
+
+
+export const generateMetadata = async(): Promise<Metadata> => {
+    return {
+        title: "Search",
+        description: "Search",
+    }
+};
 
 
 export default async function SearchProductsPage({ searchParams }: Props) {

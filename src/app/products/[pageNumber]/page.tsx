@@ -32,6 +32,7 @@ export default async function ProductsPage({params}: {params: { pageNumber: stri
 	const products = await getProductsList(productsPerPage, offset);
     const totalProducts = await getProductsCount();
 
+    const href = "products"
     if (products.length === 0) {
         throw notFound();
     }
@@ -41,6 +42,7 @@ export default async function ProductsPage({params}: {params: { pageNumber: stri
             <section className="mx-auto max-w-screen-2xl p-12">
 				<ProductList products={products} />
                 <Pagination
+                    href={href}
                     currentPage={pageNumber}
                     totalProducts={totalProducts}
                     itemsPerPage={productsPerPage}

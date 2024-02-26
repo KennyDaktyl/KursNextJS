@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { ProductList } from "@/app/ui/organism/ProductList";
 import { getProductsByCategorySlug } from "@/api/products";
 import { GetCategoriesSlug } from "@/api/categories";
+import Pagination from "@/app/ui/atoms/Pagination";
+
+
+const productsPerPage = 8;
 
 
 export const generateStaticParams = async () => {
@@ -31,6 +36,7 @@ export const generateMetadata = async({
     }
 };
 
+
 export default async function CategoryProductPage({
     params,
 }: {
@@ -38,13 +44,30 @@ export default async function CategoryProductPage({
 }) {
 
     const category = await getProductsByCategorySlug(params.categorySlug);
+    
+    const pageNumber = parseInt(params.pageNumber);
+    const offset = (pageNumber - 1) * productsPerPage;
+    const totalProducts = category.products.length;
+    const href = "categories/" + category.slug
+    const products = category.products.slice(offset, offset + productsPerPage);
+
+    if (products.length == 0) {
+        throw notFound();
+    }
+
     return (
         <>
             <section className="mx-auto max-w-screen-2xl p-12">
                 <h1>
                     { category.name }
                 </h1>
-				<ProductList products={category.products} />
+				<ProductList products={products} />
+                <Pagination
+                    href={href}
+                    currentPage={pageNumber}
+                    totalProducts={totalProducts}
+                    itemsPerPage={productsPerPage}
+                />
 			</section>
         </>
     )
