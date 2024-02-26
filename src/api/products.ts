@@ -6,16 +6,23 @@ import { GetProductByIdDocument, GetStaticProductsPageDocument, GetTotalProducts
 
 
 export const getProductsByCategorySlug = async (categorySlug: string ) => {
-    const category = await executeGraphql(
+    const response = await executeGraphql(
         ProductsGetByCategorySlugDocument,
         { slug: categorySlug }
     );
 
-    if (!category.category) {
+    if (!response.category) {
         throw notFound();
     }
 
-    return category.category.products.map(mapProductsListResponseItemToProductItemType);
+    const products = response.category.products.map(mapProductsListResponseItemToProductItemType);
+
+    const categoryWithProducts = {
+        ...response.category,
+        products: products,
+    };
+
+    return categoryWithProducts;
 };
 
 

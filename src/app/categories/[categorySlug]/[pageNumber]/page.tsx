@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ProductList } from "@/app/ui/organism/ProductList";
 import { getProductsByCategorySlug } from "@/api/products";
 import { GetCategoriesSlug } from "@/api/categories";
@@ -13,22 +14,37 @@ export const generateStaticParams = async () => {
 }
 
 
+interface Category {
+    name: string;
+    description: string;
+}
+
+export const generateMetadata = async({
+    params,
+}: {
+    params: { categorySlug: string; pageNumber: string };
+}): Promise<Metadata> => {
+    const category: Category = await getProductsByCategorySlug(params.categorySlug);
+    return {
+        title: category.name,
+        description: category.description,
+    }
+};
+
 export default async function CategoryProductPage({
     params,
 }: {
     params: { categorySlug: string; pageNumber: string };
 }) {
 
-    const products = await getProductsByCategorySlug(params.categorySlug);
-
+    const category = await getProductsByCategorySlug(params.categorySlug);
     return (
         <>
             <section className="mx-auto max-w-screen-2xl p-12">
                 <h1>
-                    Produkty z kategoriami { params.categorySlug }, strona{" "}
-                    { params.pageNumber }
+                    { category.name }
                 </h1>
-				<ProductList products={products} />
+				<ProductList products={category.products} />
 			</section>
         </>
     )

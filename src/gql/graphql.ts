@@ -288,7 +288,7 @@ export type ProductsGetByCategorySlugQueryVariables = Exact<{
 }>;
 
 
-export type ProductsGetByCategorySlugQuery = { category?: { name: string, slug: string, products: Array<{ id: string, name: string, price: number, slug: string, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string, slug: string, id: string }> }> } | null };
+export type ProductsGetByCategorySlugQuery = { category?: { name: string, description: string, slug: string, products: Array<{ id: string, name: string, price: number, slug: string, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string, slug: string, id: string }> }> } | null };
 
 export type ProductsGetListQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -309,6 +309,11 @@ export type GetCollectionProductsBySlugQueryVariables = Exact<{
 
 
 export type GetCollectionProductsBySlugQuery = { collection?: { id: string, name: string, slug: string, description: string, products: Array<{ id: string, name: string, price: number, slug: string, categories: Array<{ name: string, slug: string, id: string }>, images: Array<{ url: string, alt: string }> }> } | null };
+
+export type GetCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCollectionsQuery = { collections: { data: Array<{ slug: string, name: string, id: string, description: string }> } };
 
 export type GetTotalProductsCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -396,6 +401,7 @@ export const ProductsGetByCategorySlugDocument = new TypedDocumentString(`
       }
     }
     name
+    description
     slug
   }
 }
@@ -457,6 +463,18 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetCollectionProductsBySlugQuery, GetCollectionProductsBySlugQueryVariables>;
+export const GetCollectionsDocument = new TypedDocumentString(`
+    query GetCollections {
+  collections {
+    data {
+      slug
+      name
+      id
+      description
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetCollectionsQuery, GetCollectionsQueryVariables>;
 export const GetTotalProductsCountDocument = new TypedDocumentString(`
     query GetTotalProductsCount {
   products {

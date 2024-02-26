@@ -13,7 +13,7 @@ export const generateStaticParams = async () => {
 
     return products.map((product: ProductIdForStaticPageType) => ({
             categorySlug: product.category.slug,
-            productSlyg: product.slug,
+            productSlug: product.slug,
             productId: product.id,
 
     }));
@@ -26,10 +26,10 @@ export const generateMetadata = async({
 }): Promise<Metadata> => {
     const product = await getProductById(params.productId);
     return {
-        title: `Produkt ${product.name}`,
+        title: product.name,
         description: product.description,
         openGraph: {
-            title: `Produkt ${product.name}`,
+            title: product.name,
             description: product.description,
             images: [product.images.url],
         }

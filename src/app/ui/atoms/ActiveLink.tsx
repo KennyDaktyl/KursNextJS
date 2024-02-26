@@ -25,6 +25,7 @@ export const ActiveLink = ({ href, children, exact = false }: ActiveLinkProps) =
     return (
         <Link
             href={resolvedHref}
+            role="link"
             className={clsx('mx-auto text-gray-800 font-bold h-full line-h-60 hover:text-gray-600', isActive && 'underline')}
             aria-current={isActive ? 'page' : undefined}
             >

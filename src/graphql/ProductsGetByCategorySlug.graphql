@@ -16,6 +16,7 @@ query ProductsGetByCategorySlug($slug: String!) {
 			}
 		}
 		name
+		description
 		slug
 	}
 }
