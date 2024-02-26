@@ -11,10 +11,11 @@ export default async function CollectionProductsPage() {
                 <h1>Collections</h1>
                 <ul>
                     {response.data.map(collection => (
-                        <li key={collection.id}>
+                        <li key={collection.id} className="my-10">
                             <ActiveLink href={`/collections/${collection.slug}`}>
                                 {collection.name}
                             </ActiveLink>
+                            <p>{ collection.description }</p>
                         </li>
                     ))}
                 </ul>
