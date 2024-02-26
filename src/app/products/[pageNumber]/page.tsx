@@ -36,11 +36,12 @@ export default async function ProductsPage({params}: {params: { pageNumber: stri
     if (products.length === 0) {
         throw notFound();
     }
+    const containerName = "products-list";
     
     return (
         <>
             <section className="mx-auto max-w-screen-2xl p-12">
-				<ProductList products={products} />
+				<ProductList products={products} containerName={containerName} />
                 <Pagination
                     href={href}
                     currentPage={pageNumber}

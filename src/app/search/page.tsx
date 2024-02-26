@@ -24,10 +24,12 @@ export const generateMetadata = async(): Promise<Metadata> => {
 export default async function SearchProductsPage({ searchParams }: Props) {
     const { query } = searchParams;    
     const products = await getProductsBySearch(query);
+    const containerName = "products-list";
+
     return (
         <>
             <p>Search: {query}</p>
-            <ProductList products={products} />
+            <ProductList products={products} containerName={containerName}/>
         </>
     );
 }

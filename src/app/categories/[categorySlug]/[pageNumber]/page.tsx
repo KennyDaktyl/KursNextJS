@@ -54,14 +54,14 @@ export default async function CategoryProductPage({
     if (products.length == 0) {
         throw notFound();
     }
-
+    const containerName = "products-list";
     return (
         <>
             <section className="mx-auto max-w-screen-2xl p-12">
                 <h1>
                     { category.name }
                 </h1>
-				<ProductList products={products} />
+				<ProductList products={products} containerName={containerName}/>
                 <Pagination
                     href={href}
                     currentPage={pageNumber}

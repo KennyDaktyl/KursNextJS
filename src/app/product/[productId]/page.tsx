@@ -61,6 +61,7 @@ export default async function ProductDetailsPage({
 
     const recommended_products_filtered = collection_data.products.filter((p: ProductOnListItemType) => p.id !== product.id
     );
+    const containerName = "related-products";
 
     return (
         <>
@@ -68,9 +69,7 @@ export default async function ProductDetailsPage({
             {recommended_products_filtered.length > 0 && (
                 <Suspense>
                     <h2>Polecane produkty z kolekcji {collection_data.collection.name}</h2>
-                    <div data-testid="related-products">
-                        <ProductList products={recommended_products_filtered.slice(0, 4)} />
-                    </div>
+                    <ProductList products={recommended_products_filtered.slice(0, 4)} containerName={containerName}/>
                 </Suspense>
             )}
         </>

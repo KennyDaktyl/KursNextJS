@@ -33,6 +33,7 @@ export default async function CollectionProductsPage({
 }) {
 
     const response = await getCollectionProductsBySlug(params.collectionSlug);
+    const containerName = "products-list";
 
     return (
         <>
@@ -40,7 +41,7 @@ export default async function CollectionProductsPage({
                 <h1>
                     Produkty z kolekcji { response.collection.name }
                 </h1>
-				<ProductList products={response.products} />
+				<ProductList products={response.products} containerName={containerName} />
 			</section>
         </>
     )
