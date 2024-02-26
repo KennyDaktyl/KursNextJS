@@ -12,8 +12,6 @@ export const generateStaticParams = async () => {
     const products = await getProductIdForStaticPage(8); 
 
     return products.map((product: ProductIdForStaticPageType) => ({
-            categorySlug: product.category.slug,
-            productSlug: product.slug,
             productId: product.id,
 
     }));

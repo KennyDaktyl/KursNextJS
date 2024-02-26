@@ -9,7 +9,7 @@ type ProductItemProps = {
 
 export const ProductItem = ({ product }: ProductItemProps) => {
     const href = {
-        pathname: `/product/${product.category.slug}/${product.slug}/${product.id}`,
+        pathname: `/product/${product.id}`,
     };
 
     return (
