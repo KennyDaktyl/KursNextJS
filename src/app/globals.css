@@ -31,3 +31,7 @@ body {
 .h-60 {
 	height: 60px;
 }
+
+.line-h-60 {
+	line-height: 60px;
+}

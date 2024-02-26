@@ -9,11 +9,11 @@ type ProductItemProps = {
 
 export const ProductItem = ({ product }: ProductItemProps) => {
     const href = {
-        pathname: `/products/${product.category.slug}/${product.slug}/${product.id}`,
+        pathname: `/product/${product.category.slug}/${product.slug}/${product.id}`,
     };
 
     return (
-        <li className="cursor-pointer">
+        <li className="cursor-pointer flex justify-center items-center">
             <ActiveLink href={href}>
                 <article>
                     <ProductImage 

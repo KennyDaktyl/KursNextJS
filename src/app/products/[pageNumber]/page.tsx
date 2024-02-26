@@ -16,17 +16,17 @@ export const generateStaticParams = async () => {
 
     if (pagesNeeded > 1) {
         return numberPageToStatic.map((pageNumber) => {
-            return {"pageNumberOrCategory": pageNumber.toString()};
+            return {"pageNumber": pageNumber.toString()};
         });
     } else {
-        return [{"pageNumberOrCategory": "1"}];
+        return [{"pageNumber": "1"}];
     }
 }
 
 
-export default async function ProductsPage({params}: {params: { pageNumberOrCategory: string }}) {
+export default async function ProductsPage({params}: {params: { pageNumber: string }}) {
 
-    const pageNumber = parseInt(params.pageNumberOrCategory);
+    const pageNumber = parseInt(params.pageNumber);
     const offset = (pageNumber - 1) * productsPerPage;
 
 	const products = await getProductsList(productsPerPage, offset);
