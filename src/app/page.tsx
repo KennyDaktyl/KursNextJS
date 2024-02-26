@@ -7,10 +7,11 @@ export default async function Home() {
 	const productsPerPage = 4;
 	const offset = 0;
 	const products = await getProductsList(productsPerPage, offset);
-
+	const containerName = "products-list";
+	
 	return (
 		<section className="mx-auto max-w-screen-2xl p-12">
-			<ProductList products={products} />
+			<ProductList products={products} containerName={containerName}/>
 		</section>
 	);
 }
