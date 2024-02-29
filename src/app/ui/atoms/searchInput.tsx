@@ -33,6 +33,7 @@ export const SearchInput = () => {
     return (
         <div className="flex bg-white border border-gray-300 rounded-full">
             <input
+                role="searchbox"
                 type="text"
                 name="query"
                 minLength={1}
