@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { CheckIcon } from "lucide-react";
 
-import { getProductById, getProductIdForStaticPage } from "@/api/products";
+import { getProductById, getProductIdForStaticPage, getProductsByCategorySlug } from "@/api/products";
 import type { ProductIdForStaticPageType, ProductOnListItemType } from "@/app/ui/types";
-import { getCollectionProductsBySlug } from "@/api/collections";
 import { ProductList } from "@/app/ui/organism/ProductList";
 import { ProductImage } from "@/app/ui/atoms/ProductImage";
-import { formatMoney } from "@/utils";
+import { ProductDetails } from "@/app/ui/atoms/ProductDetails";
 
 
 export const generateStaticParams = async () => {
@@ -36,14 +34,11 @@ export const generateMetadata = async({
     }
 };
 
-interface CollectionResponse {
+interface CategoryResponse {
     products: ProductOnListItemType[];
-    collection: {
-        name: string,
-        description: string;
-        slug: string;
-        id: string
-    }
+    name: string,
+    description: string;
+    slug: string;
 }
 
 export default async function ProductDetailsPage({
@@ -56,14 +51,11 @@ export default async function ProductDetailsPage({
     if (!product) {
         throw notFound();
     }
-    let collection_data: CollectionResponse = { products: [], collection: {"name": "", "description": "", "slug": "", "id": ""} };
 
-    if (product.collections.slug) {
-        collection_data = await getCollectionProductsBySlug(product.collections.slug);
-    }
-
-    const recommended_products_filtered = collection_data.products.filter((p: ProductOnListItemType) => p.id !== product.id
-    );
+    let category_data: CategoryResponse = { products: [], "name": "", "description": "", "slug": ""};
+    category_data = await getProductsByCategorySlug(product.category.slug);
+    const recommended_products_filtered = category_data.products.filter((p: ProductOnListItemType) => p.id !== product.id).slice(0, 4);
+    
     const containerName = "related-products";
 
     async function AddToCartAction(_formData: FormData) {
@@ -82,24 +74,7 @@ export default async function ProductDetailsPage({
                     />
                 </div>
                 <div>
-                    <h1>{product.name}</h1>
-                    <p className="text-sm font-medium text-gray-900">
-                        <span className="sr-only">Cena:</span>
-                        {formatMoney(product.price / 100)}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                        <span className="sr-only">Kategoria:</span> {product.description}
-                    </p>
-
-                    <div>
-                        <CheckIcon 
-                            className="h-5 w-5 flex-shrink-0 text-pink-500"
-                            aria-hidden="true"
-                        />
-                        <p className="ml-1 text-sm font-semibold text-slate-500">
-                            In stock
-                        </p>
-                    </div>
+                    <ProductDetails product={product} />
 
                     <form action={AddToCartAction}>
                         <input type="hidden" name="productId" value={product.id}/>
@@ -109,9 +84,9 @@ export default async function ProductDetailsPage({
             </div>
 
             {recommended_products_filtered.length > 0 && (
-            <Suspense>
-                <h2>Polecane produkty z kolekcji {collection_data.collection.name}</h2>
-                <ProductList products={recommended_products_filtered.slice(0, 4)} containerName={containerName}/>
+            <Suspense fallback={<p>Loading recommended products...</p>}>
+                <h2>Polecane produkty z kategorii {category_data.name}</h2>
+                <ProductList products={recommended_products_filtered} containerName={containerName}/>
             </Suspense>
             )}
         </article>

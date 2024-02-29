@@ -1,7 +1,7 @@
 import { ActiveLink } from "./ActiveLink";
 
 interface PaginationProps {
-    href: string,
+    href: string;
     currentPage: number;
     totalProducts: number;
     itemsPerPage: number;
