@@ -20,7 +20,7 @@ export const ProductDetails = ({
 }: ProductDetailsType) => {
     return (
         <>
-            <h1>{name}</h1>
+            <h1 role="heading">{name}</h1>
             <p className="text-sm font-medium text-gray-900">
                 <span className="sr-only">Price:</span>
                 {formatMoney(price / 100)}

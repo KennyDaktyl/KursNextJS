@@ -13,7 +13,7 @@ type NavLink = {
 const NavLinks: NavLink[] = [
     { href: "/", label: "Home", exact: true },
     { href: "/products/", label: "All", exact: false },
-    { href: "/collections/", label: "Collections", exact: false },
+    { href: "/collections/", label: "Collections", exact: true },
     { href: "/categories/t-shirts/", label: "T-Shirts", exact: false },
     { href: "/categories/hoodies/", label: "Hoodies", exact: false },
     { href: "/categories/accessories/", label: "Accessories", exact: false },
