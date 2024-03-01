@@ -7,6 +7,7 @@ import type { ProductIdForStaticPageType, ProductOnListItemType } from "@/app/ui
 import { ProductList } from "@/app/ui/organism/ProductList";
 import { ProductImage } from "@/app/ui/atoms/ProductImage";
 import { ProductDetails } from "@/app/ui/atoms/ProductDetails";
+import { addProductToCart } from "@/actions/addProductToCart";
 
 
 export const generateStaticParams = async () => {
@@ -52,16 +53,18 @@ export default async function ProductDetailsPage({
         throw notFound();
     }
 
-    let category_data: CategoryResponse = { products: [], "name": "", "description": "", "slug": ""};
-    category_data = await getProductsByCategorySlug(product.category.slug);
+    const category_data: CategoryResponse = await getProductsByCategorySlug(product.category.slug);
     const recommended_products_filtered = category_data.products.filter((p: ProductOnListItemType) => p.id !== product.id).slice(0, 4);
     
     const containerName = "related-products";
 
     async function AddToCartAction(_formData: FormData) {
         "use server";
-    
-        console.log(params.productId)
+        
+        const productId = _formData.get("productId") as string;
+        const quantity = parseInt(_formData.get("quantity") as string);
+
+        await addProductToCart(productId, quantity);
     }
 
     return (
@@ -75,10 +78,10 @@ export default async function ProductDetailsPage({
                 </div>
                 <div>
                     <ProductDetails product={product} />
-
                     <form action={AddToCartAction}>
                         <input type="hidden" name="productId" value={product.id}/>
-                        <button className="mt-4 hover:shadow-md transition-shadow py-2 px-6 border rounded-sm shadow-sm bg-slate-300">Add to cart</button>
+                        <input type="number" name="quantity" min={1} defaultValue={1} required/>
+                        <button data-testid="add-to-cart-button" className="mt-4 hover:shadow-md transition-shadow py-2 px-6 border rounded-sm shadow-sm bg-slate-300">Add to cart</button>
                     </form>
                 </div>
             </div>
