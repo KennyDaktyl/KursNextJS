@@ -8,6 +8,7 @@ import { ProductList } from "@/app/ui/organism/ProductList";
 import { ProductImage } from "@/app/ui/atoms/ProductImage";
 import { ProductDetails } from "@/app/ui/atoms/ProductDetails";
 import { addProductToCart } from "@/actions/addProductToCart";
+import { revalidatePath } from "next/cache";
 
 
 export const generateStaticParams = async () => {
@@ -65,6 +66,7 @@ export default async function ProductDetailsPage({
         const quantity = parseInt(_formData.get("quantity") as string);
 
         await addProductToCart(productId, quantity);
+        revalidatePath("/")
     }
 
     return (

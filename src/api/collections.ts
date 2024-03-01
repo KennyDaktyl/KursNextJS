@@ -5,10 +5,10 @@ import { GetCollectionBySlugDocument, GetCollectionProductsBySlugDocument, GetCo
 
 
 export const getCollections = async () => {
-    const response = await executeGraphql(
-        GetCollectionsDocument,
-        { }
-    );
+    const response = await executeGraphql({
+        query: GetCollectionsDocument,
+        variables: {}
+    });
 
     if (!response.collections) {
         throw notFound();
@@ -18,10 +18,10 @@ export const getCollections = async () => {
 
 
 export const getCollectionProductsBySlug = async (collectionSlug: string ) => {
-    const response = await executeGraphql(
-        GetCollectionProductsBySlugDocument,
-        { slug: collectionSlug }
-    );
+    const response = await executeGraphql({
+        query: GetCollectionProductsBySlugDocument,
+        variables: { slug: collectionSlug }
+    });
 
     if (!response.collection) {
         throw notFound();
@@ -38,10 +38,10 @@ export const getCollectionProductsBySlug = async (collectionSlug: string ) => {
 };
 
 export const getCollectionBySlug = async (collectionSlug: string ) => {
-    const response = await executeGraphql(
-        GetCollectionBySlugDocument,
-        { slug: collectionSlug }
-    );
+    const response = await executeGraphql({
+        query: GetCollectionBySlugDocument,
+        variables: { slug: collectionSlug }
+    });
 
     if (!response.collection) {
         throw notFound();

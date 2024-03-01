@@ -6,10 +6,10 @@ import { GetProductByIdDocument, GetStaticProductsPageDocument, GetTotalProducts
 
 
 export const getProductsByCategorySlug = async (categorySlug: string ) => {
-    const response = await executeGraphql(
-        ProductsGetByCategorySlugDocument,
-        { slug: categorySlug }
-    );
+    const response = await executeGraphql({
+        query: ProductsGetByCategorySlugDocument,
+        variables: { slug: categorySlug }
+    });
 
     if (!response.category) {
         throw notFound();
@@ -29,10 +29,10 @@ export const getProductsByCategorySlug = async (categorySlug: string ) => {
 export const getProductsList = async (itemCount: number, offset: number) => {
     
 	try {
-        const response = await executeGraphql(
-            ProductsGetListDocument,
-            { take: itemCount, skip: offset }
-        );
+        const response = await executeGraphql({
+            query: ProductsGetListDocument,
+            variables: { take: itemCount, skip: offset }
+        });
         
         return response.products.data.map(mapProductsListResponseItemToProductItemType);
     } catch (error) {
@@ -43,7 +43,10 @@ export const getProductsList = async (itemCount: number, offset: number) => {
 
 export const getProductById = async (productId: string) => {
 	try {
-        const productResponse = await executeGraphql(GetProductByIdDocument, { id: productId });
+        const productResponse = await executeGraphql({
+            query: GetProductByIdDocument,
+            variables: { id: productId }
+        });
 
         if (!productResponse.product) {
             throw notFound();
@@ -59,26 +62,26 @@ export const getProductById = async (productId: string) => {
 };
 
 export const getProductIdForStaticPage = async (take: number): Promise<ProductIdForStaticPageType[]> => {
-    const response = await executeGraphql(
-        GetStaticProductsPageDocument,
-        { take: take }
-    );
+    const response = await executeGraphql({
+        query: GetStaticProductsPageDocument,
+        variables: { take: take }
+    });
     return response.products.data.map(mapProductsListIdResponseItemToProductItemType);
 }
 
 export const getProductsCount = async () => {
-    const response = await executeGraphql(
-        GetTotalProductsCountDocument,
-        { }
-    );
+    const response = await executeGraphql({
+        query: GetTotalProductsCountDocument,
+        variables: {}
+    });
     return response.products.meta.total;
 }
 
 export const getProductsBySearch = async ( search: string ) => {
-    const response = await executeGraphql(
-        SearchProductsDocument,
-        { search: search }
-    )
+    const response = await executeGraphql({
+        query: SearchProductsDocument,
+        variables: { search: search }
+    })
     
     return response.products.data.map(mapProductsListResponseItemToProductItemType)
 }

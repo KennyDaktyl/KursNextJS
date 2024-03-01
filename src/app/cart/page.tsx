@@ -4,6 +4,7 @@ import { ChangeQuantity } from "./IncrementProductQuantity";
 import { executeGraphql } from "@/api/graphqlApi";
 import { GetCartItemsDocument } from "@/gql/graphql";
 import { formatMoney } from "@/utils";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 
 interface CartItem {
@@ -30,7 +31,10 @@ export default async function CartPage() {
         );
     }
 
-    const response = await executeGraphql(GetCartItemsDocument, { id: cartId });
+    const response = await executeGraphql({
+        query: GetCartItemsDocument,
+        variables: { id: cartId }
+    });
     items = response.cart?.items || [];
 
     return (

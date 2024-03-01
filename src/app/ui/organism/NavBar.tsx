@@ -1,7 +1,10 @@
-import { ShoppingCart } from 'lucide-react';
+import { Link, ShoppingCart } from 'lucide-react';
 import { Suspense } from 'react';
 import { ActiveLink } from "../atoms/ActiveLink";
 import { SearchInput } from '../atoms/searchInput';
+import { cookies } from 'next/headers';
+import { GetCartItemsDocument } from '@/gql/graphql';
+import { executeGraphql } from '@/api/graphqlApi';
 
 
 type NavLink = {
@@ -19,8 +22,28 @@ const NavLinks: NavLink[] = [
     { href: "/categories/accessories/", label: "Accessories", exact: false },
 ]
 
+interface CartItem {
+    quantity: number;
+    product: {
+        id: string;
+        name: string;
+        slug: string;
+        price: number;
+    };
+}
 
-export function NavBar(): JSX.Element {
+
+export async function NavBar() {
+    const cartId = cookies().get("cartId")?.value;
+    let items: CartItem[] = [];    
+    if (cartId) {
+        const response = await executeGraphql({
+            query: GetCartItemsDocument,
+            variables: { id: cartId }
+        });
+        items = response.cart?.items || [];
+    }
+    const count = items.length;
 
     return (
         <nav className="bg-white h-60">
@@ -32,12 +55,19 @@ export function NavBar(): JSX.Element {
                         </li>
                     ))}
                 </ul>
-                <ul className="flex items-center">
                     <Suspense fallback={<p>Loading data...</p>}>
                         <SearchInput />
                     </Suspense>
-                    <ShoppingCart className='ml-4 h-6 w-6 flex-shrink' aria-hidden="true"/>
-                </ul>
+                <div className="flex w-full h-full items-center justify-center">
+                    <a
+                        href="/cart"
+                        className="w-full h-full group m-2 flex items-center p-2"
+                    >
+                        <ShoppingCart className='ml-4 h-6 w-6 flex-shrink' aria-hidden="true" />
+                        <span className='ml-2 text-sm font-medium'>{ count }</span>
+                        <span className='sr-only'></span>
+                    </a>
+                </div>
             </div>
         </nav>
     );
