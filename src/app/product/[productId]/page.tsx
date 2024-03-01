@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { revalidatePath } from "next/cache";
 
 import { getProductById, getProductIdForStaticPage, getProductsByCategorySlug } from "@/api/products";
 import type { ProductIdForStaticPageType, ProductOnListItemType } from "@/app/ui/types";
@@ -8,7 +9,6 @@ import { ProductList } from "@/app/ui/organism/ProductList";
 import { ProductImage } from "@/app/ui/atoms/ProductImage";
 import { ProductDetails } from "@/app/ui/atoms/ProductDetails";
 import { addProductToCart } from "@/actions/addProductToCart";
-import { revalidatePath } from "next/cache";
 
 
 export const generateStaticParams = async () => {

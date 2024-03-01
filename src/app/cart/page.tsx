@@ -4,7 +4,6 @@ import { ChangeQuantity } from "./IncrementProductQuantity";
 import { executeGraphql } from "@/api/graphqlApi";
 import { GetCartItemsDocument } from "@/gql/graphql";
 import { formatMoney } from "@/utils";
-import { revalidatePath, revalidateTag } from "next/cache";
 
 
 interface CartItem {

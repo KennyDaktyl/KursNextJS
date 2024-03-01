@@ -1,8 +1,9 @@
-import { Link, ShoppingCart } from 'lucide-react';
+import { cookies } from 'next/headers';
+
+import { ShoppingCart } from 'lucide-react';
 import { Suspense } from 'react';
 import { ActiveLink } from "../atoms/ActiveLink";
 import { SearchInput } from '../atoms/searchInput';
-import { cookies } from 'next/headers';
 import { GetCartItemsDocument } from '@/gql/graphql';
 import { executeGraphql } from '@/api/graphqlApi';
 
