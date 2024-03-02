@@ -14,9 +14,9 @@ export const SetProductQuantity = () => {
         setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1));
     };
 
-    const handleAddToCart = () => {
-        setQuantity(1); 
-    };
+    // const handleAddToCart = () => {
+    //     setQuantity(1); 
+    // };
 
     return (
         <>
@@ -45,7 +45,7 @@ export const SetProductQuantity = () => {
                     +
                 </button>
             </div>
-            <AddToCartButton onClick={handleAddToCart}/>
+            <AddToCartButton />
         </>
     );
 };

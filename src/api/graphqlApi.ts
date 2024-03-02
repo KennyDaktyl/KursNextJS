@@ -13,10 +13,10 @@ export const executeGraphql = async<TResult, TVariables>({
         next?: NextFetchRequestConfig;
         cache?: RequestCache; 
 }): Promise<TResult> => {
-        if (!process.env.GRAPHQL_URL) {
+        if (!process.env.NEXT_PUBLIC_GRAPHQL_URL) {
             throw TypeError("GRAPHQL_URL is not defined");
         }
-        const res = await fetch(process.env.GRAPHQL_URL, {
+        const res = await fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
             method: "POST",
             body: JSON.stringify({
                 query,

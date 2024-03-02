@@ -1,11 +1,10 @@
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 
-import { revalidatePath } from "next/cache";
 import { ChangeQuantity } from "./IncrementProductQuantity";
 import { RemoveButton } from "./RemoveButton";
 import { formatMoney } from "@/utils";
-import { GetCartItems, removeItem } from "@/api/carts";
+import { GetCartItems } from "@/api/carts";
 
 
 interface CartItem {
@@ -43,17 +42,6 @@ export default async function CartPage() {
 
     items = await GetCartItems(cartId);
 
-
-    async function RemoveItemAction(_formData: FormData) {
-        "use server";
-        
-        const productId = _formData.get("productId") as string;
-        const cartId = _formData.get("cartId") as string;
-
-        await removeItem(cartId, productId);
-        revalidatePath("/cart")
-    }
-
     return (
         <>
             <h1 className="text-3xl font-semibold mb-4">Cart</h1>
@@ -74,11 +62,7 @@ export default async function CartPage() {
                                 <td data-testid="product-price" className="border px-4 py-2 text-center">{formatMoney(item.product.price / 100)}</td>
                                 <ChangeQuantity cartId={cartId} itemId={item.product.id} quantity={item.quantity} price={item.product.price}/>
                                 <td className="px-4 py-2">
-                                    <form action={RemoveItemAction} className="flex flex-wrap text-center justify-start items-center">
-                                        <input type="hidden" name="productId" value={item.product.id}/>
-                                        <input type="hidden" name="cartId" value={cartId}/>
-                                        <RemoveButton />
-                                    </form>
+                                    <RemoveButton cartId={ cartId } productId={ item.product.id } />
                                 </td>
                             </tr>
                         ))}

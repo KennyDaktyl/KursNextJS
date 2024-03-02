@@ -2,19 +2,10 @@
 import { useFormStatus } from "react-dom"
 
 
-interface AddToCartButtonProps {
-    onClick: () => void;
-}
-
-
-export const AddToCartButton: React.FC<AddToCartButtonProps> = ({ onClick }) => {
+export const AddToCartButton = () => {
     const formStatus = useFormStatus();
 
-    const handleClick = () => {
-        if (!formStatus.pending) {
-            onClick(); 
-        }
-    };
+
 
     return (
         <button
@@ -23,7 +14,6 @@ export const AddToCartButton: React.FC<AddToCartButtonProps> = ({ onClick }) => 
             className={`py-2 px-6 border rounded-sm shadow-sm bg-slate-300 
                         ${formStatus.pending ? 'cursor-not-allowed' : 'cursor-pointer'}
                         hover:shadow-md transition-shadow`}
-            onClick={handleClick}
         >
             Add to cart
         </button>
