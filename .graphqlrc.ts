@@ -2,8 +2,8 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
-  // schema: process.env.GRAPHQL_URL,
-  schema: "https://graphql.hyperfunctor.com/graphql",
+  schema: process.env.GRAPHQL_URL,
+  // schema: "https://graphql.hyperfunctor.com/graphql",
   documents: "src/graphql/*.graphql",
   ignoreNoDocuments: true,
   generates: {

@@ -1,8 +1,7 @@
 "use server"
 
 import { revalidatePath, revalidateTag } from "next/cache";
-import { executeGraphql } from "@/api/graphqlApi"
-import { CartChangeItemQuantityDocument } from "@/gql/graphql"
+import { ChangeItemQuantity } from "@/api/carts";
 
 
 export const changeItemQuantity = (
@@ -13,11 +12,5 @@ export const changeItemQuantity = (
    
     revalidateTag("cart");
     revalidatePath("/cart");
-    return executeGraphql({
-        query: CartChangeItemQuantityDocument,
-        variables: { id: cartId, productId: itemId, quantity: quantity },
-        next: {
-            tags: ["cart"]
-        }
-    });
+    return ChangeItemQuantity(cartId, itemId, quantity);
 }

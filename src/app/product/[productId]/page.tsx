@@ -3,12 +3,13 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { revalidatePath } from "next/cache";
 
+import { addProductToCart } from "./actions";
 import { getProductById, getProductIdForStaticPage, getProductsByCategorySlug } from "@/api/products";
 import type { ProductIdForStaticPageType, ProductOnListItemType } from "@/app/ui/types";
 import { ProductList } from "@/app/ui/organism/ProductList";
 import { ProductImage } from "@/app/ui/atoms/ProductImage";
 import { ProductDetails } from "@/app/ui/atoms/ProductDetails";
-import { addProductToCart } from "@/actions/addProductToCart";
+import { SetProductQuantity } from "@/app/ui/atoms/SetProductQuantity";
 
 
 export const generateStaticParams = async () => {
@@ -18,6 +19,7 @@ export const generateStaticParams = async () => {
             productId: product.id,
     }));
 };
+
 
 export const generateMetadata = async({
     params,
@@ -35,6 +37,7 @@ export const generateMetadata = async({
         }
     }
 };
+
 
 interface CategoryResponse {
     products: ProductOnListItemType[];
@@ -80,19 +83,20 @@ export default async function ProductDetailsPage({
                 </div>
                 <div>
                     <ProductDetails product={product} />
-                    <form action={AddToCartAction}>
+                    <form action={AddToCartAction} className="flex flex-wrap text-center justify-start items-center">
                         <input type="hidden" name="productId" value={product.id}/>
-                        <input type="number" name="quantity" min={1} defaultValue={1} required/>
-                        <button data-testid="add-to-cart-button" className="mt-4 hover:shadow-md transition-shadow py-2 px-6 border rounded-sm shadow-sm bg-slate-300">Add to cart</button>
+                        <SetProductQuantity />
                     </form>
                 </div>
             </div>
 
             {recommended_products_filtered.length > 0 && (
-            <Suspense fallback={<p>Loading recommended products...</p>}>
-                <h2>Polecane produkty z kategorii {category_data.name}</h2>
-                <ProductList products={recommended_products_filtered} containerName={containerName}/>
-            </Suspense>
+            <div className="my-3">
+                <Suspense fallback={<p>Loading recommended products...</p>}>
+                    <h2 className="text-2xl">Recommended products {category_data.name}</h2>
+                    <ProductList products={recommended_products_filtered} containerName={containerName}/>
+                </Suspense>
+            </div>
             )}
         </article>
     );

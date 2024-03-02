@@ -1,9 +1,11 @@
 import { cookies } from "next/headers";
-import { ChangeQuantity } from "./IncrementProductQuantity";
+import type { Metadata } from "next";
 
-import { executeGraphql } from "@/api/graphqlApi";
-import { GetCartItemsDocument } from "@/gql/graphql";
+import { revalidatePath } from "next/cache";
+import { ChangeQuantity } from "./IncrementProductQuantity";
+import { RemoveButton } from "./RemoveButton";
 import { formatMoney } from "@/utils";
+import { GetCartItems, removeItem } from "@/api/carts";
 
 
 interface CartItem {
@@ -15,6 +17,15 @@ interface CartItem {
         price: number;
     };
 }
+
+
+export const generateMetadata = async(): Promise<Metadata> => {
+    return {
+        title: "Cart",
+        description: "Cart details",
+    }
+};
+
 
 
 export default async function CartPage() {
@@ -30,34 +41,45 @@ export default async function CartPage() {
         );
     }
 
-    const response = await executeGraphql({
-        query: GetCartItemsDocument,
-        variables: { id: cartId }
-    });
-    items = response.cart?.items || [];
+    items = await GetCartItems(cartId);
+
+
+    async function RemoveItemAction(_formData: FormData) {
+        "use server";
+        
+        const productId = _formData.get("productId") as string;
+        const cartId = _formData.get("cartId") as string;
+
+        await removeItem(cartId, productId);
+        revalidatePath("/cart")
+    }
 
     return (
         <>
             <h1 className="text-3xl font-semibold mb-4">Cart</h1>
             {items.length > 0 ? (
-                <table className="table-fixed">
+                <table className="table-fixed mx-auto w-full">
                     <thead>
                         <tr>
-                            <th className="px-4 py-2">Quantity</th>
                             <th className="px-4 py-2">Product Name</th>
                             <th className="px-4 py-2">Price</th>
+                            <th className="px-4 py-2">Quantity</th>
                             <th className="px-4 py-2">Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         {items.map((item, index) => (
                             <tr key={index}>
-                                <td className="border px-4 py-2 text-center">
-                                    <ChangeQuantity cartId={cartId} itemId={item.product.id} quantity={item.quantity}/>
+                                <td className="border px-4 py-2 w-96 text-lg">{item.product.name}</td>
+                                <td data-testid="product-price" className="border px-4 py-2 text-center">{formatMoney(item.product.price / 100)}</td>
+                                <ChangeQuantity cartId={cartId} itemId={item.product.id} quantity={item.quantity} price={item.product.price}/>
+                                <td className="px-4 py-2">
+                                    <form action={RemoveItemAction} className="flex flex-wrap text-center justify-start items-center">
+                                        <input type="hidden" name="productId" value={item.product.id}/>
+                                        <input type="hidden" name="cartId" value={cartId}/>
+                                        <RemoveButton />
+                                    </form>
                                 </td>
-                                <td className="border px-4 py-2">{item.product.name}</td>
-                                <td className="border px-4 py-2">{formatMoney(item.product.price / 100)}</td>
-                                <td className="border px-4 py-2">{formatMoney((item.quantity * item.product.price) / 100)}</td>
                             </tr>
                         ))}
                     </tbody>

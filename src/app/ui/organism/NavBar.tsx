@@ -1,11 +1,11 @@
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 
 import { ShoppingCart } from 'lucide-react';
 import { Suspense } from 'react';
 import { ActiveLink } from "../atoms/ActiveLink";
 import { SearchInput } from '../atoms/searchInput';
-import { GetCartItemsDocument } from '@/gql/graphql';
-import { executeGraphql } from '@/api/graphqlApi';
+import { GetCartItems } from '@/api/carts';
 
 
 type NavLink = {
@@ -23,28 +23,15 @@ const NavLinks: NavLink[] = [
     { href: "/categories/accessories/", label: "Accessories", exact: false },
 ]
 
-interface CartItem {
-    quantity: number;
-    product: {
-        id: string;
-        name: string;
-        slug: string;
-        price: number;
-    };
-}
-
 
 export async function NavBar() {
     const cartId = cookies().get("cartId")?.value;
-    let items: CartItem[] = [];    
+    let count = 0;
+
     if (cartId) {
-        const response = await executeGraphql({
-            query: GetCartItemsDocument,
-            variables: { id: cartId }
-        });
-        items = response.cart?.items || [];
+        const items = await GetCartItems(cartId);
+        count = items.length;
     }
-    const count = items.length;
 
     return (
         <nav className="bg-white h-60">
@@ -60,14 +47,14 @@ export async function NavBar() {
                         <SearchInput />
                     </Suspense>
                 <div className="flex w-full h-full items-center justify-center">
-                    <a
+                    <Link
                         href="/cart"
                         className="w-full h-full group m-2 flex items-center p-2"
                     >
                         <ShoppingCart className='ml-4 h-6 w-6 flex-shrink' aria-hidden="true" />
                         <span className='ml-2 text-sm font-medium'>{ count }</span>
                         <span className='sr-only'></span>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </nav>
