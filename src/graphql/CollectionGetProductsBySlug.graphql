@@ -18,6 +18,7 @@ query getCollectionProductsBySlug($slug: String = "") {
 				url
 				alt
 			}
+			rating
 		}
 	}
 }

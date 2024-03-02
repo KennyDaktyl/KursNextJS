@@ -14,6 +14,7 @@ query ProductsGetByCategorySlug($slug: String!) {
 				slug
 				id
 			}
+			rating
 		}
 		name
 		description

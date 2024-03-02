@@ -43,18 +43,16 @@ export const getProductsList = async (itemCount: number, offset: number) => {
 
 export const getProductById = async (productId: string) => {
 	try {
-        const productResponse = await executeGraphql({
+        const response = await executeGraphql({
             query: GetProductByIdDocument,
             variables: { id: productId }
         });
 
-        if (!productResponse.product) {
+        if (!response.product) {
             throw notFound();
         }
 
-        const productData = productResponse.product;
-
-        return productResponseItemToProductItemType(productData);
+        return productResponseItemToProductItemType(response.product);
     } catch (error) {
         console.error('Error while fetching product by ID:', error);
         throw error;
@@ -102,23 +100,31 @@ interface ProductsListItemData {
         slug: string;
         id: string;
     }[];
+    rating?: number | null;
 }
 
-export const mapProductsListResponseItemToProductItemType = (productData: ProductsListItemData): ProductOnListItemType => ({
-    id: productData.id,
-    category: {
-        slug: productData.categories[0]?.slug || '',
-        name: productData.categories[0]?.name || '',
-        id: productData.categories[0]?.id,
-    },
-    name: productData.name,
-    price: productData.price,
-    slug: productData.slug,
-    images: {
-        url: productData.images[0]?.url || '',
-        alt: productData.images[0]?.alt || '',
-    },
-});
+export const mapProductsListResponseItemToProductItemType = (
+    productData: ProductsListItemData
+): ProductOnListItemType => {
+    const rating: number = typeof productData.rating === 'number' ? productData.rating : 0;
+
+    return {
+        id: productData.id,
+        category: {
+            slug: productData.categories[0]?.slug || '',
+            name: productData.categories[0]?.name || '',
+            id: productData.categories[0]?.id,
+        },
+        name: productData.name,
+        price: productData.price,
+        slug: productData.slug,
+        images: {
+            url: productData.images[0]?.url || '',
+            alt: productData.images[0]?.alt || '',
+        },
+        rating: rating
+    }
+};
 
 
 /*Product */
@@ -135,12 +141,16 @@ interface ProductResponseItem {
 		slug: string;
 		name: string;
 		description: string;
-	  }[]; 
+    }[]; 
+    rating: number
+    reviews: string[]
 }
   
 const productResponseItemToProductItemType = (
     productData: ProductResponseItem,
 ): ProductItemType => {
+    const reviews: string[] = productData.reviews.map(review => review.id);
+
     return {
 		id: productData.id,
 		category: {
@@ -160,7 +170,9 @@ const productResponseItemToProductItemType = (
 		images: {
 		  url: productData.images[0]?.url || "",
 		  alt: productData.images[0]?.alt || "",
-		},
+        },
+        rating: productData.rating,
+        reviews: reviews 
 	};
 };
 

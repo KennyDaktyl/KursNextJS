@@ -10,6 +10,7 @@ import { ProductList } from "@/app/ui/organism/ProductList";
 import { ProductImage } from "@/app/ui/atoms/ProductImage";
 import { ProductDetails } from "@/app/ui/atoms/ProductDetails";
 import { SetProductQuantity } from "@/app/ui/atoms/SetProductQuantity";
+import { AddProductReviewForm } from "./addRatingForm";
 
 
 export const generateStaticParams = async () => {
@@ -72,6 +73,20 @@ export default async function ProductDetailsPage({
         revalidatePath("/")
     }
 
+    async function AddProductReviewAction(_formData: FormData) {
+        "use server";
+        
+        const author = _formData.get("author") as string;
+        const description = _formData.get("description") as string;
+        const email = _formData.get("email") as string;
+        const productId = _formData.get("productId") as string;
+        const rating = parseInt(_formData.get("review") as string);
+        const title = _formData.get("title") as string;
+
+        await reviewCreate(author, description, email, productId, rating, title);
+        revalidatePath(`/product/${productId}`)
+    }
+
     return (
         <article className="mx-auto grid max-w-7xl py8">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
@@ -87,7 +102,9 @@ export default async function ProductDetailsPage({
                         <input type="hidden" name="productId" value={product.id}/>
                         <SetProductQuantity />
                     </form>
+                    <AddProductReviewForm productId={product.id} rating={ product.rating } />
                 </div>
+
             </div>
 
             {recommended_products_filtered.length > 0 && (

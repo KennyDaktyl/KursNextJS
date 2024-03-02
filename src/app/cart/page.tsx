@@ -41,33 +41,41 @@ export default async function CartPage() {
     }
 
     items = await GetCartItems(cartId);
-
+    let total = 0;
+    items.forEach((item) => {
+        total += item.product.price * item.quantity;
+    });
     return (
         <>
             <h1 className="text-3xl font-semibold mb-4">Cart</h1>
             {items.length > 0 ? (
-                <table className="table-fixed mx-auto w-full">
-                    <thead>
-                        <tr>
-                            <th className="px-4 py-2">Product Name</th>
-                            <th className="px-4 py-2">Price</th>
-                            <th className="px-4 py-2">Quantity</th>
-                            <th className="px-4 py-2">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items.map((item, index) => (
-                            <tr key={index}>
-                                <td className="border px-4 py-2 w-96 text-lg">{item.product.name}</td>
-                                <td data-testid="product-price" className="border px-4 py-2 text-center">{formatMoney(item.product.price / 100)}</td>
-                                <ChangeQuantity cartId={cartId} itemId={item.product.id} quantity={item.quantity} price={item.product.price}/>
-                                <td className="px-4 py-2">
-                                    <RemoveButton cartId={ cartId } productId={ item.product.id } />
-                                </td>
+                <>
+                    <table className="table-fixed mx-auto w-full">
+                        <thead>
+                            <tr>
+                                <th className="px-4 py-2">Product Name</th>
+                                <th className="px-4 py-2">Price</th>
+                                <th className="px-4 py-2">Quantity</th>
+                                <th className="px-4 py-2">Total</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {items.map((item, index) => (
+                                <tr key={index}>
+                                    <td className="border px-4 py-2 w-96 text-lg">{item.product.name}</td>
+                                    <td data-testid="product-price" className="border px-4 py-2 text-center">{formatMoney(item.product.price / 100)}</td>
+                                    <ChangeQuantity cartId={cartId} itemId={item.product.id} quantity={item.quantity} price={item.product.price}/>
+                                    <td className="px-4 py-2 text-right">
+                                        <RemoveButton cartId={ cartId } productId={ item.product.id } />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <div className="flex justify-end items-center w-full px-4 py-2">
+                        <p className="font-semibold text-lg mt-4">Total Price: {formatMoney(total / 100)}</p>
+                    </div>
+                </>
             ) : (
                 <p>Cart is Empty</p>
             )}

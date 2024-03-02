@@ -18,6 +18,8 @@ export type ProductItemType = {
 		url: string;
 		alt: string;
 	};
+	rating: number;
+	reviews: string[];
 };
 
 export type ProductOnListItemType = {
@@ -34,6 +36,7 @@ export type ProductOnListItemType = {
 		url: string;
 		alt: string;
 	};
+	rating: number
 };
 
 export type ProductIdForStaticPageType = {

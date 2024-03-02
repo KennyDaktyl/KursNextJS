@@ -16,6 +16,7 @@ query ProductsGetList($take: Int = 8, $skip: Int = 0) {
 				slug
 				id
 			}
+			rating
 		}
 	}
 }

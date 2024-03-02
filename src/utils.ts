@@ -4,3 +4,8 @@ export const formatMoney = (amount: number) => {
 		currency: "PLN",
 	}).format(amount);
 };
+
+
+export const formatRating = (rating: number): string => {
+    return rating.toFixed(2);
+};

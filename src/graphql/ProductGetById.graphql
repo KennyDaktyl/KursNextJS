@@ -27,5 +27,9 @@ query GetProductById($id: ID!) {
 			id
 			description
 		}
+		rating,
+		reviews {
+			id
+		}
 	}
 }

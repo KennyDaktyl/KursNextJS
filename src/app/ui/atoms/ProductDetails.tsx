@@ -1,5 +1,5 @@
 import { CheckIcon } from "lucide-react";
-import { formatMoney } from "@/utils";
+import { formatMoney, formatRating } from "@/utils";
 
 
 interface ProductDetailsType {
@@ -10,13 +10,15 @@ interface ProductDetailsType {
             name: string;
         }
         description: string;
+        rating: number
+        reviews: string[]
     }
 }
 
 
 export const ProductDetails = ({
     product:
-    { name, price, category, description },
+    { name, price, category, description, rating, reviews },
 }: ProductDetailsType) => {
     return (
         <>
@@ -31,7 +33,12 @@ export const ProductDetails = ({
             <p className="text-sm text-gray-500 my-3">
                 <span className="sr-only">Description:</span> {description}
             </p>
-
+            <p className="text-sm text-gray-500 my-3">
+                <span>Rating:&nbsp;</span>
+                <span className="sr-only">Rating:</span>
+                {formatRating(rating)}
+                <small>&nbsp;({reviews.length})</small>
+            </p>
             <div className="flex mt-3">
                 <CheckIcon 
                     className="h-5 w-5 flex-shrink-0 text-pink-500"
