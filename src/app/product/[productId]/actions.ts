@@ -1,5 +1,19 @@
+"use server";
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
+
 import { AddItemToCart, ChangeItemQuantity, GetCartItems, GetOrCreateCartByAddItem } from "@/api/carts";
+import { reviewCreate } from "@/api/review";
+
+
+export async function AddToCartAction(_formData: FormData) {
+    
+    const productId = _formData.get("productId") as string;
+    const quantity = parseInt(_formData.get("quantity") as string);
+
+    await addProductToCart(productId, quantity);
+    revalidatePath("/")
+}
 
 
 export async function addProductToCart(productId: string, quantity: number) {
@@ -31,4 +45,18 @@ export async function addProductToCart(productId: string, quantity: number) {
             await AddItemToCart(cartId, productId, quantity)
         }
     }
+}
+
+
+export async function AddProductReviewAction(_formData: FormData) {
+
+    const productId = _formData.get("productId") as string;
+    const author = _formData.get("author") as string;
+    const description = _formData.get("description") as string;
+    const email = _formData.get("email") as string;
+    const rating = _formData.get("rating") as string;
+    const title = _formData.get("title") as string;
+    
+    await reviewCreate(productId, author, description, email, parseInt(rating), title);
+    revalidatePath(`/product/${productId}`);
 }

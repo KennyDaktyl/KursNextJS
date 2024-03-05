@@ -354,7 +354,7 @@ export type GetProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetProductByIdQuery = { product?: { description: string, id: string, name: string, price: number, slug: string, rating?: number | null, images: Array<{ url: string, alt: string }>, collections: Array<{ id: string, name: string, slug: string, description: string }>, categories: Array<{ id: string, slug: string, name: string, description: string }>, reviews: Array<{ id: string }> } | null };
+export type GetProductByIdQuery = { product?: { description: string, id: string, name: string, price: number, slug: string, rating?: number | null, images: Array<{ url: string, alt: string }>, collections: Array<{ id: string, name: string, slug: string, description: string }>, categories: Array<{ id: string, slug: string, name: string, description: string }>, reviews: Array<{ rating: number }> } | null };
 
 export type ProductsGetByCategorySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -559,7 +559,7 @@ export const GetProductByIdDocument = new TypedDocumentString(`
     }
     rating
     reviews {
-      id
+      rating
     }
   }
 }

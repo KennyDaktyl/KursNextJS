@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { revalidatePath } from "next/cache";
 
-import { addProductToCart } from "./actions";
-import { AddProductReviewForm } from "./addRatingForm";
+import { ProductReview } from "./productReview";
 import { getProductById, getProductIdForStaticPage, getProductsByCategorySlug } from "@/api/products";
 import { ProductList } from "@/app/ui/organism/ProductList";
 import { ProductImage } from "@/app/ui/atoms/ProductImage";
 import { ProductDetails } from "@/app/ui/atoms/ProductDetails";
-import { SetProductQuantity } from "@/app/ui/atoms/SetProductQuantity";
-// import { reviewCreate } from "@/api/review";
+import { AddProductToBasketForm } from "@/app/ui/atoms/AddProductToBasketForm";
 
 
 export const generateStaticParams = async () => {
@@ -50,35 +47,13 @@ export default async function ProductDetailsPage({
         throw notFound();
     }
     const rating = product?.rating || 0;
+    // const reviews = product?.reviews.length || 0;
 
     const category_products_response = await getProductsByCategorySlug(product.categories[0].slug);
     const recommended_products_filtered = category_products_response.products.filter(p => p.id !== product.id).slice(0, 4);
     const containerName = "related-products";
 
-    async function AddToCartAction(_formData: FormData) {
-        "use server";
-        
-        const productId = _formData.get("productId") as string;
-        const quantity = parseInt(_formData.get("quantity") as string);
-
-        await addProductToCart(productId, quantity);
-        revalidatePath("/")
-    }
-
-    // async function AddProductReviewAction(_formData: FormData) {
-    //     "use server";
-        
-    //     const author = _formData.get("author") as string;
-    //     const description = _formData.get("description") as string;
-    //     const email = _formData.get("email") as string;
-    //     const productId = _formData.get("productId") as string;
-    //     const rating = parseInt(_formData.get("review") as string);
-    //     const title = _formData.get("title") as string;
-
-    //     await reviewCreate(author, description, email, productId, rating, title);
-    //     revalidatePath(`/product/${productId}`)
-    // }
-
+   
     return (
         <article className="mx-auto grid max-w-7xl py8">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
@@ -93,13 +68,10 @@ export default async function ProductDetailsPage({
                         name={product.name}
                         category={product.categories[0].name}
                         description={product.description}
-                        price={product.price} rating={rating}
-                        reviews={product.reviews.length} />
-                    <form action={AddToCartAction} className="flex flex-wrap text-center justify-start items-center">
-                        <input type="hidden" name="productId" value={product.id}/>
-                        <SetProductQuantity />
-                    </form>
-                    <AddProductReviewForm productId={product.id} />
+                        price={product.price} 
+                        />
+                        <AddProductToBasketForm productId={product.id}/>
+                    <ProductReview productId={product.id}  rating={rating} reviews={product.reviews} />
                 </div>
 
             </div>

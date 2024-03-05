@@ -1,21 +1,17 @@
 import { CheckIcon } from "lucide-react";
-import { formatMoney, formatRating } from "@/utils";
+import { formatMoney } from "@/utils";
 
 
 export const ProductDetails = ({
     name,
     price,
     category,
-    description,
-    rating, 
-    reviews
+    description,   
 }: {
     name: string;
     price: number;
     category: string;
     description: string;
-    rating: number;
-    reviews: number
 }) => {
     return (
         <>
@@ -30,12 +26,7 @@ export const ProductDetails = ({
             <p className="text-sm text-gray-500 my-3">
                 <span className="sr-only">Description:</span> {description}
             </p>
-            <p className="text-sm text-gray-500 my-3">
-                <span>Rating:&nbsp;</span>
-                <span className="sr-only">Rating:</span>
-                {formatRating(rating)}
-                <small>&nbsp;({reviews})</small>
-            </p>
+           
             <div className="flex mt-3">
                 <CheckIcon 
                     className="h-5 w-5 flex-shrink-0 text-pink-500"

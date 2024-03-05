@@ -1,9 +1,15 @@
 "use client";
 import React, { useState } from 'react';
 import { AddToCartButton } from '@/app/product/[productId]/addToCartButton';
+import { AddToCartAction } from '@/app/product/[productId]/actions';
 
 
-export const SetProductQuantity = () => {
+export const AddProductToBasketForm = ({
+    productId,
+}: { 
+    productId: string
+}) => {
+
     const [quantity, setQuantity] = useState(1);
 
     const incrementQuantity = () => {
@@ -14,12 +20,10 @@ export const SetProductQuantity = () => {
         setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1));
     };
 
-    // const handleAddToCart = () => {
-    //     setQuantity(1); 
-    // };
 
     return (
-        <>
+        <form action={AddToCartAction} className="flex flex-wrap text-center justify-start items-center">
+                        <input type="hidden" name="productId" value={productId}/>
             <div className="w-full flex my-3 items-center">
                 <button
                     type='button'
@@ -46,6 +50,6 @@ export const SetProductQuantity = () => {
                 </button>
             </div>
             <AddToCartButton />
-        </>
+        </form>
     );
 };
