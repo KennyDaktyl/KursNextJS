@@ -2,24 +2,21 @@ import { CheckIcon } from "lucide-react";
 import { formatMoney, formatRating } from "@/utils";
 
 
-interface ProductDetailsType {
-    product: {
-        name: string;
-        price: number;
-        category: {
-            name: string;
-        }
-        description: string;
-        rating: number
-        reviews: string[]
-    }
-}
-
-
 export const ProductDetails = ({
-    product:
-    { name, price, category, description, rating, reviews },
-}: ProductDetailsType) => {
+    name,
+    price,
+    category,
+    description,
+    rating, 
+    reviews
+}: {
+    name: string;
+    price: number;
+    category: string;
+    description: string;
+    rating: number;
+    reviews: number
+}) => {
     return (
         <>
             <h1 role="heading" className="text-4xl">{name}</h1>
@@ -28,7 +25,7 @@ export const ProductDetails = ({
                 {formatMoney(price / 100)}
             </p>
             <p className="text-sm text-gray-500 my-3">
-                <span className="sr-only">Category:</span> {category.name}
+                <span className="sr-only">Category:</span> {category}
             </p>
             <p className="text-sm text-gray-500 my-3">
                 <span className="sr-only">Description:</span> {description}
@@ -37,7 +34,7 @@ export const ProductDetails = ({
                 <span>Rating:&nbsp;</span>
                 <span className="sr-only">Rating:</span>
                 {formatRating(rating)}
-                <small>&nbsp;({reviews.length})</small>
+                <small>&nbsp;({reviews})</small>
             </p>
             <div className="flex mt-3">
                 <CheckIcon 

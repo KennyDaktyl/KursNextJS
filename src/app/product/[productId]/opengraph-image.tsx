@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
 
 import { ProductImage } from "@/app/ui/atoms/ProductImage";
-import type { ProductItemType } from "@/app/ui/types";
 
 
 export const runtime = "edge";
@@ -14,19 +13,33 @@ export const size = {
 
 export const contentType = "image/png";
 
-export default async function og(product: ProductItemType) {
+
+export default async function og({
+    product
+}: {
+    product: {
+        name: string;
+        description: string;
+        category: string;
+        image: {
+            url: string;
+            alt: string;
+        };
+    };
+}): Promise<ImageResponse> {
+    const { name, description, category, image } = product;
+
     return new ImageResponse(
         (
-            <div
-				tw="w-full text-white h-full flex flex-col items-center justify-center text-8xl">
+            <div tw="w-full text-white h-full flex flex-col items-center justify-center text-8xl">
                 <ProductImage 
-                    src={ product.images.url }
-                    alt={ product.images.alt } 
+                    src={image.url}
+                    alt={image.alt} 
                 />
                 <div>
-                    <h2 tw="font-sans uppercase m-0 p-0 text-[101px] leading-4">{product.name}</h2>
-                    <p tw="font-serif m-0 p-0 font-black">{product.description}</p>
-                    <p tw="font-serif m-0 p-0 font-black">Category: {product.category.name}</p>
+                    <h2 tw="font-sans uppercase m-0 p-0 text-[101px] leading-4">{name}</h2>
+                    <p tw="font-serif m-0 p-0 font-black">{description}</p>
+                    <p tw="font-serif m-0 p-0 font-black">Category: {category}</p>
                 </div>
             </div>
         ),

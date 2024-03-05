@@ -1,20 +1,24 @@
 import { formatMoney, formatRating } from "../../../utils";
-import type { ProductOnListItemType } from "../types";
 
-type ProductItemDescriptionProps = {
-	product: ProductOnListItemType;
-};
 
 export const ProductItemDescription = ({
-	product: { category, name, price, rating },
-}: ProductItemDescriptionProps) => {
+	name, 
+	category, 
+	price, 
+	rating
+}: {
+	name: string;
+	category: string;
+	price: number;
+	rating: number;
+}) => {
 	return (
 		<>
 			<div className="mt-2 flex justify-between">
 				<div>
 					<h3  role="heading" className="text-lg font-semibold text-gray-700">{name}</h3>
 					<p className="text-sm text-gray-500">
-						<span className="sr-only">Kategoria:</span> {category.name}
+						<span className="sr-only">Kategoria:</span> {category}
 					</p>
 				</div>
 				<p className="text-lg font-medium text-gray-900">

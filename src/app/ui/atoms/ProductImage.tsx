@@ -1,5 +1,6 @@
 import NextImage from "next/image";
 
+
 export const ProductImage = ({
 	src,
 	alt,

@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { executeGraphql } from "./graphqlApi";
-import { mapProductsListResponseItemToProductItemType } from "./products";
 import { GetCollectionBySlugDocument, GetCollectionProductsBySlugDocument, GetCollectionsDocument } from "@/gql/graphql";
 
 
@@ -27,7 +26,7 @@ export const getCollectionProductsBySlug = async (collectionSlug: string ) => {
         throw notFound();
     }
     return {
-        "products": response.collection.products.map(mapProductsListResponseItemToProductItemType),
+        "products": response.collection.products,
         "collection": {
             "name": response.collection.name,
             "slug": response.collection.slug,

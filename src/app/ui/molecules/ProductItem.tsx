@@ -1,15 +1,28 @@
 import { ProductImage } from "../atoms/ProductImage"
 import { ProductItemDescription } from "../atoms/ProductItemDescription"
-import type { ProductOnListItemType } from "../types";
 import { ActiveLink } from "../atoms/ActiveLink";
 
-type ProductItemProps = {
-    product: ProductOnListItemType;
-};
 
-export const ProductItem = ({ product }: ProductItemProps) => {
+export const ProductItem = ({
+    id,
+    name,
+    price,
+    image,
+    category,
+    rating, 
+}: {
+    id: string;
+    name: string;
+    price: number;
+    category: string;
+    image: {
+        url: string;
+        alt: string
+    };
+    rating: number;
+}) => {
     const href = {
-        pathname: `/product/${product.id}`,
+        pathname: `/product/${id}`,
     };
 
     return (
@@ -17,10 +30,10 @@ export const ProductItem = ({ product }: ProductItemProps) => {
             <ActiveLink href={href}>
                 <article>
                     <ProductImage 
-                        src={ product.images.url }
-                        alt={ product.images.alt } 
+                        src={ image.url }
+                        alt={ image.alt } 
                     />
-                    <ProductItemDescription product={ product } />
+                    <ProductItemDescription name={name} category={category} price={price} rating={rating} />
                 </article>
             </ActiveLink>
         </li>

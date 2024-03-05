@@ -1,17 +1,21 @@
 "use client";
-import { useOptimistic } from "react";
+// import { useOptimistic } from "react";
 import { useFormStatus } from "react-dom";
 
 
-export const AddProductReviewForm = ({ productId, rating }: { productId: string, rating: number }) => {
+export const AddProductReviewForm = ({ 
+    productId, 
+}: { 
+    productId: string,
+}) => {
     const formStatus = useFormStatus();
 
-    const [optimisticRating, setOptimisticRating] = useOptimistic(
-        rating,
-        (currentState, optimisticValue: number) => {
-            return optimisticValue;
-        }
-    );
+    // const [optimisticRating, setOptimisticRating] = useOptimistic(
+    //     rating,
+    //     (currentState, optimisticValue: number) => {
+    //         return optimisticValue;
+    //     }
+    // );
     
     return (
         <form className="max-w-md my-4">

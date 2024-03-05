@@ -19,17 +19,12 @@ export const generateStaticParams = async () => {
 }
 
 
-interface Category {
-    name: string;
-    description: string;
-}
-
 export const generateMetadata = async({
     params,
 }: {
     params: { categorySlug: string; pageNumber: string };
 }): Promise<Metadata> => {
-    const category: Category = await getProductsByCategorySlug(params.categorySlug);
+    const category = await getProductsByCategorySlug(params.categorySlug);
     return {
         title: category.name,
         description: category.description,
