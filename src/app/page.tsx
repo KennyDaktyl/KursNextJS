@@ -1,12 +1,15 @@
 import { ProductList } from "./ui/organism/ProductList";
+import { ProductSortBy, SortDirection } from "@/gql/graphql";
 import { getProductsList } from "@/api/products";
 
 
 export default async function Home() {
 
-	const productsPerPage = 4;
+	const order = SortDirection.Desc;
+    const orderby = ProductSortBy.Rating;
+	const productsPerPage = 4;	
 	const offset = 0;
-	const products = await getProductsList(productsPerPage, offset);
+	const products = await getProductsList(orderby, order, productsPerPage, offset);
 	const containerName = "products-list";
 	
 	return (

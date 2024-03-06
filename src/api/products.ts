@@ -1,6 +1,16 @@
 import { notFound } from "next/navigation";
 import { executeGraphql } from "./graphqlApi";
-import { GetProductByIdDocument, GetStaticProductsPageDocument, GetTotalProductsCountDocument, ProductsGetByCategorySlugDocument, ProductsGetListDocument, SearchProductsDocument } from "@/gql/graphql";
+import { 
+    GetProductByIdDocument,
+    GetStaticProductsPageDocument,
+    GetTotalProductsCountDocument,
+    type InputMaybe,
+    ProductsGetByCategorySlugDocument,
+    ProductsGetListDocument,
+    SearchProductsDocument, 
+    type ProductSortBy,
+    type SortDirection 
+} from "@/gql/graphql";
 
 
 export const getProductsByCategorySlug = async (categorySlug: string ) => {
@@ -17,12 +27,21 @@ export const getProductsByCategorySlug = async (categorySlug: string ) => {
 };
 
 
-export const getProductsList = async (itemCount: number, offset: number) => {
+export const getProductsList = async (
+    orderBy: InputMaybe<ProductSortBy>,
+    order: InputMaybe<SortDirection>,
+    itemCount: number,
+    offset: number
+) => {
     
 	try {
         const response = await executeGraphql({
             query: ProductsGetListDocument,
-            variables: { take: itemCount, skip: offset }
+            variables: { 
+                orderBy: orderBy,
+                order: order,  
+                take: itemCount,
+                skip: offset }
         });
         
         return response.products.data;

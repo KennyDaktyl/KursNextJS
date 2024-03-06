@@ -93,6 +93,7 @@ export type MutationCartChangeItemQuantityArgs = {
 
 export type MutationCartCompleteArgs = {
   cartId: Scalars['ID']['input'];
+  userEmail: Scalars['String']['input'];
 };
 
 
@@ -369,6 +370,8 @@ export type GetTotalProductsCountQueryVariables = Exact<{ [key: string]: never; 
 export type GetTotalProductsCountQuery = { products: { meta: { total: number } } };
 
 export type ProductsGetListQueryVariables = Exact<{
+  orderBy?: InputMaybe<ProductSortBy>;
+  order?: InputMaybe<SortDirection>;
   take?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
 }>;
@@ -599,8 +602,8 @@ export const GetTotalProductsCountDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetTotalProductsCountQuery, GetTotalProductsCountQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
-    query ProductsGetList($take: Int = 8, $skip: Int = 0) {
-  products(take: $take, skip: $skip) {
+    query ProductsGetList($orderBy: ProductSortBy = DEFAULT, $order: SortDirection = DESC, $take: Int = 8, $skip: Int = 0) {
+  products(orderBy: $orderBy, order: $order, take: $take, skip: $skip) {
     data {
       slug
       name

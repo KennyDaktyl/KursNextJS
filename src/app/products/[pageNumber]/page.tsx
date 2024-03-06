@@ -1,8 +1,12 @@
 import { notFound } from "next/navigation";
 
+import { Suspense } from "react";
+
+import { SetSortDirection } from "@/app/ui/atoms/SelectSortProducts";
 import { getProductsCount, getProductsList } from "@/api/products";
 import { ProductList } from "@/app/ui/organism/ProductList";
 import Pagination from "@/app/ui/atoms/Pagination";
+import { ProductSortBy, SortDirection } from "@/gql/graphql";
 
 
 const productsPerPage = 8;
@@ -24,12 +28,43 @@ export const generateStaticParams = async () => {
 }
 
 
-export default async function ProductsPage({params}: {params: { pageNumber: string }}) {
+export default async function ProductsPage({
+    params,
+    searchParams
+}: {
+    params: { pageNumber: string }, 
+    searchParams: {
+        order: string;
+        orderby: string;
+    }
+}) {
 
+    const { order, orderby } = searchParams;  
+
+    let orderEnum: SortDirection;
+    switch (order) {
+        case "asc":
+            orderEnum = SortDirection.Asc
+        default:
+            orderEnum = SortDirection.Desc
+    }
+
+    let orderByEnum: ProductSortBy;
+    switch (orderby) {
+        case "price":
+            orderByEnum = ProductSortBy.Price;
+            break;
+        case "rating":
+            orderByEnum = ProductSortBy.Rating;
+            break;
+        default:
+            orderByEnum = ProductSortBy.Default;
+            break;
+    }
     const pageNumber = parseInt(params.pageNumber);
     const offset = (pageNumber - 1) * productsPerPage;
 
-	const products = await getProductsList(productsPerPage, offset);
+	const products = await getProductsList(orderByEnum, orderEnum, productsPerPage, offset);
     const totalProducts = await getProductsCount();
 
     const href = "products"
@@ -37,10 +72,13 @@ export default async function ProductsPage({params}: {params: { pageNumber: stri
         throw notFound();
     }
     const containerName = "products-list";
-    
+
     return (
         <>
             <section className="mx-auto max-w-screen-2xl p-12">
+                <Suspense fallback={<p>Loading data...</p>}>
+                    <SetSortDirection />
+                </Suspense>
 				<ProductList products={products} containerName={containerName} />
                 <Pagination
                     href={href}
