@@ -29,16 +29,16 @@ export const SetSortDirection = () => {
                 defaultValue={`${orderby},${order}`}
                 onChange={handleSetOrdering}
             >
-                <option value="asc, price">Price asc</option>
-                <option value="desc, price">Price desc</option>
+                <option value="price, asc">Price asc</option>
+                <option value="price, desc">Price desc</option>
             </select>
             <select 
                 data-testid="sort-by-rating" 
                 defaultValue={`${orderby},${order}`} 
                 onChange={handleSetOrdering}
                 >
-                <option value="asc, rating">Rating asc</option>
-                <option value="desc, rating">Rating desc</option>
+                <option value="rating, asc">Rating asc</option>
+                <option value="rating, desc">Rating desc</option>
             </select>
         </div>
     );

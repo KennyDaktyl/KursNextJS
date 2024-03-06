@@ -45,8 +45,13 @@ export default async function ProductsPage({
     switch (order) {
         case "asc":
             orderEnum = SortDirection.Asc
+            break; 
+        case "desc":
+            orderEnum = SortDirection.Desc
+            break; 
         default:
             orderEnum = SortDirection.Desc
+            break; 
     }
 
     let orderByEnum: ProductSortBy;
