@@ -47,7 +47,6 @@ export default async function ProductDetailsPage({
         throw notFound();
     }
     const rating = product?.rating || 0;
-    // const reviews = product?.reviews.length || 0;
 
     const category_products_response = await getProductsByCategorySlug(product.categories[0].slug);
     const recommended_products_filtered = category_products_response.products.filter(p => p.id !== product.id).slice(0, 4);

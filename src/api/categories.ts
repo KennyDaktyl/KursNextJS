@@ -4,10 +4,10 @@ import { GetCategoriesSlugDocument } from "@/gql/graphql";
 
 
 export const GetCategoriesSlug = async () => {
-    const categories = await executeGraphql({
+    const response = await executeGraphql({
         query: GetCategoriesSlugDocument,
         variables: {}
     });
 
-    return categories.categories.data
+    return response.categories?.data || [];
 };

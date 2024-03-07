@@ -1,21 +1,22 @@
 import { notFound } from "next/navigation";
 import type { TypedDocumentString } from "@/gql/graphql";
 
-
-export const executeGraphql = async<TResult, TVariables>({
+export const executeGraphql = async <TResult, TVariables>({
     query,
     variables,
     next,
     cache,
 }: {
-        query: TypedDocumentString<TResult, TVariables>;
-        variables: TVariables;
-        next?: NextFetchRequestConfig;
-        cache?: RequestCache; 
+    query: TypedDocumentString<TResult, TVariables>;
+    variables: TVariables;
+    next?: NextFetchRequestConfig;
+    cache?: RequestCache;
 }): Promise<TResult> => {
-        if (!process.env.NEXT_PUBLIC_GRAPHQL_URL) {
-            throw TypeError("GRAPHQL_URL is not defined");
-        }
+    if (!process.env.NEXT_PUBLIC_GRAPHQL_URL) {
+        throw new TypeError("GRAPHQL_URL is not defined");
+    }
+    
+    try {
         const res = await fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
             method: "POST",
             body: JSON.stringify({
@@ -29,11 +30,11 @@ export const executeGraphql = async<TResult, TVariables>({
             cache,
         });
 
-        type GraphqlResponse<T> = 
-        | { data?: undefined; errors: { message: string }[]}
-        | { data: T; errors?: undefined };
+        type GraphqlResponse<T> =
+            | { data?: undefined; errors: { message: string }[] }
+            | { data: T; errors?: undefined };
 
-        const graphqlResponse = 
+        const graphqlResponse =
             (await res.json()) as GraphqlResponse<TResult>;
 
         if (graphqlResponse.errors) {
@@ -46,5 +47,9 @@ export const executeGraphql = async<TResult, TVariables>({
             throw new Error("GraphQL Response data is null");
         }
 
-        return graphqlResponse.data
+        return graphqlResponse.data;
+    } catch (error) {
+        console.error("Error occurred during GraphQL request:", error);
+        return {} as TResult;
     }
+};

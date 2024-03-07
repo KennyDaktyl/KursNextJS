@@ -44,7 +44,7 @@ export const getProductsList = async (
                 skip: offset }
         });
         
-        return response.products.data;
+        return response.products?.data ?? [];
     } catch (error) {
         console.error("GraphQL Error:", (error as Error).message);
         return [];
@@ -76,7 +76,7 @@ export const getProductIdForStaticPage = async (
         query: GetStaticProductsPageDocument,
         variables: { take: take }
     });
-    return response.products.data;
+    return response.products?.data || [];
 }
 
 export const getProductsCount = async () => {
@@ -84,7 +84,7 @@ export const getProductsCount = async () => {
         query: GetTotalProductsCountDocument,
         variables: {}
     });
-    return response.products.meta.total;
+    return response.products?.meta.total || 0;
 }
 
 export const getProductsBySearch = async ( search: string ) => {
@@ -93,5 +93,5 @@ export const getProductsBySearch = async ( search: string ) => {
         variables: { search: search }
     })
     
-    return response.products.data
+    return response.products?.data || [];
 }

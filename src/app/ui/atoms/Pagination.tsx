@@ -15,7 +15,7 @@ const Pagination = ({ currentPage, href, totalProducts, itemsPerPage }: Paginati
         for (let i = 1; i <= totalPages; i++) {
             pageLinks.push(
                 <li key={i}>
-                    <ActiveLink href={`/${href}/${i}`} exact={true}>
+                    <ActiveLink role="link" href={`/${href}/${i}`} exact={true}>
                         {i}
                     </ActiveLink>
                 </li>
@@ -30,12 +30,12 @@ const Pagination = ({ currentPage, href, totalProducts, itemsPerPage }: Paginati
                 {currentPage > 1 && (
                     <>
                         <li>
-                            <ActiveLink href={`/${href}/1`} exact={true}>
+                            <ActiveLink role="link" href={`/${href}/1`} exact={true}>
                                 First Page
                             </ActiveLink>
                         </li>
                         <li>
-                            <ActiveLink href={`/${href}/${currentPage - 1}`} exact={true}>
+                            <ActiveLink role="link" href={`/${href}/${currentPage - 1}`} exact={true}>
                                 Previous
                             </ActiveLink>
                         </li>
@@ -44,14 +44,14 @@ const Pagination = ({ currentPage, href, totalProducts, itemsPerPage }: Paginati
                 {renderPageLinks()}
                 {currentPage < totalPages && (
                     <li>
-                        <ActiveLink href={`/${href}/${currentPage + 1}`} exact={true}>
+                        <ActiveLink role="link" href={`/${href}/${currentPage + 1}`} exact={true}>
                             Next
                         </ActiveLink>
                     </li>
                 )}
                 {currentPage < totalPages && (
                     <li>
-                        <ActiveLink href={`/${href}/${totalPages}`} exact={true}>
+                        <ActiveLink role="link" href={`/${href}/${totalPages}`} exact={true}>
                             Last Page
                         </ActiveLink>
                     </li>

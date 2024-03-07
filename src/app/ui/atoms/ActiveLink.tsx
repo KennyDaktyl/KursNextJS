@@ -9,11 +9,12 @@ import type { ReactNode } from "react";
 
 interface ActiveLinkProps {
     href: string | UrlObject;
+    role: string;
     children: ReactNode;
     exact?: boolean;
 }
 
-export const ActiveLink = ({ href, children, exact = false }: ActiveLinkProps) => {
+export const ActiveLink = ({ href, role, children, exact = false }: ActiveLinkProps) => {
     const pathname = usePathname();
     const resolvedHref = typeof href === 'string' ? { pathname: href } : href;
     let isActive = pathname === resolvedHref.pathname;
@@ -25,7 +26,7 @@ export const ActiveLink = ({ href, children, exact = false }: ActiveLinkProps) =
     return (
         <Link
             href={resolvedHref}
-            role="link"
+            role={role}
             className={clsx('mx-auto text-gray-800 font-bold h-full w-full line-h-60 hover:text-gray-600', isActive && 'underline')}
             aria-current={isActive ? 'page' : undefined}
             >

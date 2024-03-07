@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
 
-import { Suspense } from "react";
-
 import { SetSortDirection } from "@/app/ui/atoms/SelectSortProducts";
 import { getProductsCount, getProductsList } from "@/api/products";
 import { ProductList } from "@/app/ui/organism/ProductList";
@@ -81,10 +79,8 @@ export default async function ProductsPage({
     return (
         <>
             <section className="mx-auto max-w-screen-2xl p-12">
-                <Suspense fallback={<p>Loading data...</p>}>
-                    <SetSortDirection />
-                </Suspense>
-				<ProductList products={products} containerName={containerName} />
+                <SetSortDirection />
+                <ProductList products={products} containerName={containerName} />
                 <Pagination
                     href={href}
                     currentPage={pageNumber}

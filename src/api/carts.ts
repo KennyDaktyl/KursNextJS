@@ -46,6 +46,7 @@ interface CartItem {
 
 
 export const GetCartItems = async (cartId: string): Promise<CartItem[]> => {
+    
     const response = await executeGraphql<GetCartItemsQuery, GetCartItemsQueryVariables>({
         query: GetCartItemsDocument,
         variables: { id: cartId }

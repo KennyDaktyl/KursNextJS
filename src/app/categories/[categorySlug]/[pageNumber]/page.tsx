@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductList } from "@/app/ui/organism/ProductList";
@@ -6,7 +7,7 @@ import { GetCategoriesSlug } from "@/api/categories";
 import Pagination from "@/app/ui/atoms/Pagination";
 
 
-const productsPerPage = 8;
+const productsPerPage = 4;
 
 
 export const generateStaticParams = async () => {
@@ -56,7 +57,9 @@ export default async function CategoryProductPage({
                 <h1>
                     { category.name }
                 </h1>
-				<ProductList products={products} containerName={containerName}/>
+                <Suspense fallback={<p>Loading data...</p>}>
+    				<ProductList products={products} containerName={containerName}/>
+                </Suspense>
                 <Pagination
                     href={href}
                     currentPage={pageNumber}

@@ -21,7 +21,7 @@ export default async function CollectionProductsPage() {
                 <ul>
                     {response.data.map(collection => (
                         <li key={collection.id} className="my-10">
-                            <ActiveLink href={`/collections/${collection.slug}`}>
+                            <ActiveLink role="link" href={`/collections/${collection.slug}`}>
                                 {collection.name}
                             </ActiveLink>
                             <p>{ collection.description }</p>

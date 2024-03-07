@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 
 import { ChangeQuantity } from "./IncrementProductQuantity";
 import { RemoveButton } from "./RemoveButton";
+import { handlePaymentSubmitAction } from "./actions";
+
 import { formatMoney } from "@/utils";
 import { GetCartItems } from "@/api/carts";
 
@@ -28,6 +30,8 @@ export const generateMetadata = async(): Promise<Metadata> => {
 
 
 export default async function CartPage() {
+    "use server"
+
     const cartId = cookies().get("cartId")?.value;
     let items: CartItem[] = [];
 
@@ -41,10 +45,12 @@ export default async function CartPage() {
     }
 
     items = await GetCartItems(cartId);
-    let total = 0;
+    let totalPrice = 0;
     items.forEach((item) => {
-        total += item.product.price * item.quantity;
+        totalPrice += item.product.price * item.quantity;
     });
+
+
     return (
         <>
             <h1 className="text-3xl font-semibold mb-4">Cart</h1>
@@ -72,12 +78,12 @@ export default async function CartPage() {
                             ))}
                         </tbody>
                     </table>
-                    <div className="flex justify-end items-center w-full px-4 py-2">
-                        <p className="font-semibold text-lg mt-4">Total Price: {formatMoney(total / 100)}</p>
-                    </div>
+                    <form action={handlePaymentSubmitAction} className="flex justify-start items-center w-full mt-4">
+                        <button className="mt-4 max-w-xs w-full rounded-lg py-2 border hover:bg-slate-800 transition-colors bg-slate-950 text-white shadow">Pay&nbsp;{formatMoney(totalPrice / 100)}</button>
+                    </form>
                 </>
             ) : (
-                <p>Cart is Empty</p>
+                    <p>Cart is Empty</p>
             )}
         </>
     );

@@ -8,8 +8,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-	title: "Lista produktów",
-	description: "Prezentacja produktów. Klucze mieszkaniowe nacinane.",
+	title: "Products list",
+	description: "E-commerce.",
 };
 
 export default function RootLayout({
