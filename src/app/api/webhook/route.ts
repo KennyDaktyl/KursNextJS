@@ -13,8 +13,8 @@ export async function POST (request: NextRequest): Promise<Response> {
         console.log(`Revalidating ${json.productId}`)
         revalidatePath(`/product/${json.productId}`);
         revalidatePath(`/products/`);
+        revalidatePath(`/categories/`);
         return NextResponse.json({}, {status: 200})
     }
-
     return NextResponse.json({ error: "Bad Request" }, { status: 400 });
 }

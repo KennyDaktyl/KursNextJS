@@ -1,5 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
+// import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 import { AddItemToCart, ChangeItemQuantity, GetCartItems, GetOrCreateCartByAddItem } from "@/api/carts";
@@ -7,12 +8,12 @@ import { reviewCreate } from "@/api/review";
 
 
 export async function AddToCartAction(_formData: FormData) {
-    "use client"
     const productId = _formData.get("productId") as string;
     const quantity = parseInt(_formData.get("quantity") as string);
 
     await addProductToCart(productId, quantity);
     revalidatePath("/");
+    // redirect("/cart");
 }
 
 

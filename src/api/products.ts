@@ -16,7 +16,11 @@ import {
 export const getProductsByCategorySlug = async (categorySlug: string ) => {
     const response = await executeGraphql({
         query: ProductsGetByCategorySlugDocument,
-        variables: { slug: categorySlug }
+        variables: { slug: categorySlug },
+        // cache: "no-cache",
+        next: {
+            revalidate: 10
+        }
     });
 
     if (!response.category) {
@@ -41,7 +45,12 @@ export const getProductsList = async (
                 orderBy: orderBy,
                 order: order,  
                 take: itemCount,
-                skip: offset }
+                skip: offset 
+            },
+            // cache: "no-cache",
+            next: {
+                revalidate: 100
+            }
         });
         
         return response.products?.data ?? [];
@@ -55,7 +64,8 @@ export const getProductById = async (productId: string) => {
 	try {
         const response = await executeGraphql({
             query: GetProductByIdDocument,
-            variables: { id: productId }
+            variables: { id: productId },
+            cache: "no-cache",
         });
 
         if (!response.product) {
@@ -82,7 +92,8 @@ export const getProductIdForStaticPage = async (
 export const getProductsCount = async () => {
     const response = await executeGraphql({
         query: GetTotalProductsCountDocument,
-        variables: {}
+        variables: {},
+        cache: "no-cache",
     });
     return response.products?.meta.total || 0;
 }

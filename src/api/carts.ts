@@ -27,6 +27,7 @@ export const AddItemToCart = async (cartId: string, productId: string, quantity:
     await executeGraphql({
         query: AddItemToCartDocument,
         variables: { id: cartId, productId: productId, quantity: quantity },
+        cache: "no-cache",
         next: {
             tags: ["/"]
         }
@@ -49,7 +50,11 @@ export const GetCartItems = async (cartId: string): Promise<CartItem[]> => {
     
     const response = await executeGraphql<GetCartItemsQuery, GetCartItemsQueryVariables>({
         query: GetCartItemsDocument,
-        variables: { id: cartId }
+        variables: { id: cartId },
+        cache: "no-store",
+        next: {
+            tags: ["cart"]
+        }
     });
 
     return response.cart?.items || [];
@@ -63,6 +68,7 @@ export const removeItem = async (id: string, productId: string) => {
             id,
             productId
         },
+        cache: "no-cache",
     });
     return response;
 }

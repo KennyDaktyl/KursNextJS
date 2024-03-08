@@ -11,14 +11,14 @@ export const SetSortDirection = () => {
     const path = usePathname();
 
     const handleSetOrdering = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const [orderValue, orderByValue] = event.target.value.split(", ");
+        const [orderByValue, orderValue] = event.target.value.split(", ");
         setOrder(orderValue);
         setOrderBy(orderByValue);
         updateUrl(path, orderByValue, orderValue);
     };
 
     const updateUrl = (path: string, order: string, orderby: string) => {
-        router.push(`/products/1?orderby=${orderby}&order=${order}`);
+        router.push(`/products/1?orderby=${order}&order=${orderby}`);
     };
 
     return (
@@ -26,20 +26,23 @@ export const SetSortDirection = () => {
             <select 
                 className="mr-5"
                 data-testid="sort-by-price"
-                defaultValue={`${orderby},${order}`}
+                defaultValue={`price, ${order}`}
                 onChange={handleSetOrdering}
-            >
+            >   
                 <option value="price, asc">Price asc</option>
                 <option value="price, desc">Price desc</option>
             </select>
             <select 
                 data-testid="sort-by-rating" 
-                defaultValue={`${orderby},${order}`} 
+                defaultValue={`rating, ${order}`} 
                 onChange={handleSetOrdering}
                 >
                 <option value="rating, asc">Rating asc</option>
                 <option value="rating, desc">Rating desc</option>
             </select>
+            {order && orderby && (
+                <span className="ml-4">Choice orderby:&nbsp;{orderby}, sort direction:&nbsp;{order}</span>
+            )}
         </div>
     );
 };

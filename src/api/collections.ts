@@ -6,7 +6,10 @@ import { GetCollectionBySlugDocument, GetCollectionProductsBySlugDocument, GetCo
 export const getCollections = async () => {
     const response = await executeGraphql({
         query: GetCollectionsDocument,
-        variables: {}
+        variables: {},
+        next: {
+            revalidate: 10
+        }
     });
 
     if (!response.collections) {
@@ -19,7 +22,11 @@ export const getCollections = async () => {
 export const getCollectionProductsBySlug = async (collectionSlug: string ) => {
     const response = await executeGraphql({
         query: GetCollectionProductsBySlugDocument,
-        variables: { slug: collectionSlug }
+        variables: { slug: collectionSlug },
+        // cache: "no-cache",
+        next: {
+            revalidate: 10
+        }
     });
 
     if (!response.collection) {
