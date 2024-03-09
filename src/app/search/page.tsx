@@ -22,7 +22,16 @@ export const generateMetadata = async(): Promise<Metadata> => {
 
 
 export default async function SearchProductsPage({ searchParams }: Props) {
-    const { query } = searchParams;    
+    const { query } = searchParams;   
+    if (query.length < 2) {
+        return (
+            <section className="flex justify-start align-middle mx-auto max-w-screen-2xl p-12">
+                <p>Search:</p>
+                <span className='text-rose-600'>Min. length is 2 letter</span>
+            </section>
+        );
+    } 
+
     const products = await getProductsBySearch(query);
     const containerName = "products-list";
 
