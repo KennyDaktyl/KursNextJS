@@ -316,7 +316,7 @@ export type GetCartItemsQueryVariables = Exact<{
 }>;
 
 
-export type GetCartItemsQuery = { cart?: { items: Array<{ quantity: number, product: { id: string, name: string, slug: string, price: number } }> } | null };
+export type GetCartItemsQuery = { cart?: { items: Array<{ quantity: number, product: { id: string, name: string, description: string, slug: string, price: number, images: Array<{ url: string, alt: string }> } }> } | null };
 
 export type CartRemoveItemMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -349,6 +349,14 @@ export type GetCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCollectionsQuery = { collections: { data: Array<{ slug: string, name: string, id: string, description: string }> } };
+
+export type OrderCreateMutationVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+  userEmail: Scalars['String']['input'];
+}>;
+
+
+export type OrderCreateMutation = { cartComplete: { id: string, createdAt: unknown, lines: unknown, status: OrderStatus, totalAmount: number, updatedAt: unknown } };
 
 export type GetProductByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -459,8 +467,13 @@ export const GetCartItemsDocument = new TypedDocumentString(`
       product {
         id
         name
+        description
         slug
         price
+        images {
+          url
+          alt
+        }
       }
     }
   }
@@ -530,6 +543,18 @@ export const GetCollectionsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetCollectionsQuery, GetCollectionsQueryVariables>;
+export const OrderCreateDocument = new TypedDocumentString(`
+    mutation OrderCreate($cartId: ID!, $userEmail: String!) {
+  cartComplete(cartId: $cartId, userEmail: $userEmail) {
+    id
+    createdAt
+    lines
+    status
+    totalAmount
+    updatedAt
+  }
+}
+    `) as unknown as TypedDocumentString<OrderCreateMutation, OrderCreateMutationVariables>;
 export const GetProductByIdDocument = new TypedDocumentString(`
     query GetProductById($id: ID!) {
   product(id: $id) {

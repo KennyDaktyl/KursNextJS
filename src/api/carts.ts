@@ -40,8 +40,13 @@ interface CartItem {
     product: {
         id: string;
         name: string;
+        description: string,
         slug: string;
         price: number;
+        images: {
+            url: string;
+            alt: string;
+        }[];
     };
 }
 

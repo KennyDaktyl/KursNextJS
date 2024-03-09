@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
+import Link from "next/link";
 
+import { ProductImage } from "../ui/atoms/ProductImage";
 import { ChangeQuantity } from "./IncrementProductQuantity";
 import { RemoveButton } from "./RemoveButton";
 import { handlePaymentSubmitAction } from "./actions";
@@ -14,8 +16,13 @@ interface CartItem {
     product: {
         id: string;
         name: string;
+        description: string,
         slug: string;
         price: number;
+        images: {
+            url: string,
+            alt: string
+        }[]
     };
 }
 
@@ -68,7 +75,20 @@ export default async function CartPage() {
                         <tbody>
                             {items.map((item, index) => (
                                 <tr key={index}>
-                                    <td className="border px-4 py-2 w-96 text-lg">{item.product.name}</td>
+                                    <td><ProductImage 
+                                            src={ item.product.images[0].url }
+                                            alt={ item.product.images[0].alt } 
+                                    />
+                                    </td>
+                                    <td className="border px-4 py-2 w-96 text-lg">
+                                        <Link
+                                            href={`/product/${item.product.id}`}
+                                            className="hover:text-gray-600"
+                                        >
+                                            {item.product.name}
+                                        </Link>
+                                    </td>
+                                        
                                     <td data-testid="product-price" className="border px-4 py-2 text-center">{formatMoney(item.product.price / 100)}</td>
                                     <ChangeQuantity cartId={cartId} itemId={item.product.id} quantity={item.quantity} price={item.product.price}/>
                                     <td className="px-4 py-2 text-right">

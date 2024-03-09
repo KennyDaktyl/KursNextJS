@@ -5,8 +5,13 @@ query GetCartItems($id: ID = "") {
 			product {
 				id
 				name
+				description
 				slug
 				price
+				images {
+					url
+					alt
+				}
 			}
 		}
 	}

@@ -5,6 +5,7 @@ import Stripe from "stripe";
 
 import { revalidatePath, revalidateTag } from "next/cache";
 import { ChangeItemQuantity, GetCartItems } from "@/api/carts";
+import { CreateNewOrder } from "@/api/orders";
 
 
 export const changeItemQuantity = (
@@ -16,6 +17,16 @@ export const changeItemQuantity = (
     revalidateTag("cart");
     revalidatePath("/cart");
     return ChangeItemQuantity(cartId, itemId, quantity);
+}
+
+
+export const createNewOrder = (
+    cartId: string,
+    userEmail: string,
+) => {
+    revalidateTag("cart");
+    revalidatePath("/cart");
+    return CreateNewOrder(cartId, userEmail);
 }
 
 
@@ -37,6 +48,10 @@ export async function handlePaymentSubmitAction() {
         typescript: true,
     });
     
+    const userEmail = "michal.pielak81@gmail.com";
+
+    await createNewOrder(cartId, userEmail);
+
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card", "blik", "p24"],
         metadata: {
@@ -47,6 +62,8 @@ export async function handlePaymentSubmitAction() {
                 currency: "pln",
                 product_data: {
                     name: item.product?.name || "",
+                    description: item.product?.description,
+                    images: item.product?.images.map((image) => image.url),
                     },
                 unit_amount: item.product.price || 0,
                 },
