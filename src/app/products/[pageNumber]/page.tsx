@@ -5,6 +5,7 @@ import { getProductsCount, getProductsList } from "@/api/products";
 import { ProductList } from "@/app/ui/organism/ProductList";
 import Pagination from "@/app/ui/atoms/Pagination";
 import { ProductSortBy, SortDirection } from "@/gql/graphql";
+import { resolve } from "path";
 
 
 const productsPerPage = 8;
@@ -76,6 +77,7 @@ export default async function ProductsPage({
     }
     const containerName = "products-list";
 
+    // await new Promise((resolve) => setTimeout(resolve, 5000))
     return (
         <>
             <section className="mx-auto max-w-screen-2xl p-12">
