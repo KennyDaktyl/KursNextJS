@@ -4,6 +4,7 @@ import NextImage from "next/image";
 import { GetCartItems } from "@/api/carts";
 import { Overlay } from "@/app/ui/atoms/Overlay";
 import { CartDetailsButton } from "@/app/ui/atoms/CartDetailsButton";
+import { formatMoney } from "@/utils";
 
 
 interface CartItem {
@@ -61,7 +62,7 @@ export default async function ModalCart() {
                         <div className="flex flex-col">
                             <h3 className="text-lg font-semibold">{item.product?.name}</h3>
                             <p className="text-sm text-gray-600">{item.quantity}x</p>
-                            <p className="text-sm font-semibold">${(item.product?.price / 100).toFixed(2)}</p>
+                            <p className="text-sm font-semibold">{formatMoney(item.product.price / 100)}</p>
                         </div>
                     </li>
                 ))}
