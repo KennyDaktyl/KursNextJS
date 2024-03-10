@@ -18,17 +18,15 @@ export const SearchInput = () => {
     const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
         const { value } = event.currentTarget;
         setSearchQuery(value);
-        if (value.length > 1) {
-            if (typingTimer) {
-                clearTimeout(typingTimer);
-            }
-            const timer = setTimeout(() => {
-                const queryParamString = encodeURIComponent(value);
-                router.push(`/search?query=${queryParamString}`);
-                setSearchQuery(value);
-            }, delayTime);
-            setTypingTimer(timer);
-        } 
+        if (typingTimer) {
+            clearTimeout(typingTimer);
+        }
+        const timer = setTimeout(() => {
+            const queryParamString = encodeURIComponent(value);
+            router.push(`/search?query=${queryParamString}`);
+            setSearchQuery(value);
+        }, delayTime);
+        setTypingTimer(timer);
     };
     return (
         <div className="flex bg-white border border-gray-300 rounded-full">
