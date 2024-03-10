@@ -61,6 +61,8 @@ export default async function CartPage() {
     return (
         <>
             <h1 className="text-3xl font-semibold mb-4">Cart</h1>
+            {/* <Link href="/cart/details">Details</Link> */}
+
             {items.length > 0 ? (
                 <>
                     <table className="table-fixed mx-auto w-full">
