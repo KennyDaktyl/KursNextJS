@@ -5,7 +5,6 @@ import { getProductsCount, getProductsList } from "@/api/products";
 import { ProductList } from "@/app/ui/organism/ProductList";
 import Pagination from "@/app/ui/atoms/Pagination";
 import { ProductSortBy, SortDirection } from "@/gql/graphql";
-import { resolve } from "path";
 
 
 const productsPerPage = 8;
