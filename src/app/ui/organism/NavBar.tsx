@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 
-import { ShoppingCart } from 'lucide-react';
+import { ListOrdered, ShoppingCart } from 'lucide-react';
 import { Suspense } from 'react';
 
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
@@ -20,7 +20,6 @@ type NavLink = {
 const NavLinks: NavLink[] = [
     { href: "/", label: "Home", exact: true, role: "link"},
     { href: "/products", label: "All", exact: false, role: "link"},
-    // { href: "/collections/", label: "Collections", exact: true, role: "link" },
     { href: "/categories/t-shirts", label: "T-Shirts", exact: false, role: "link" },
     { href: "/categories/hoodies", label: "Hoodies", exact: false, role: "link" },
     { href: "/categories/accessories", label: "Accessories", exact: false, role: "link"},
@@ -60,10 +59,18 @@ export async function NavBar() {
                         <span className='ml-2 text-sm font-medium'>{ count }</span>
                         <span className='sr-only'></span>
                     </Link>
-                    <div className='w-32 flex justify-center'>
+                    <div className='w-32 flex justify-center align-middle'>
                         <SignedIn>
-                            <UserButton
-                                userProfileMode="navigation" />
+                            <Link
+                                href="/orders"
+                                className="h-full group m-2 flex items-center p-2"
+                            >
+                                <ListOrdered className='ml-4 h-6 w-6 flex-shrink' aria-hidden="true" />
+                            </Link>
+                            <div className='p-2 flex justify-center align-middle items-center'>
+                                <UserButton
+                                    userProfileMode="navigation" />
+                            </div>
                         </SignedIn>
                         <SignedOut>
                             <SignInButton />
