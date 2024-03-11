@@ -29,10 +29,10 @@ export default async function ModalCart() {
 
     if (!cartId) {
         return (
-            <>
-                <h1 className="text-3xl font-semibold mb-4">Cart</h1>
-                <p>Cart is Empty</p>
-            </>
+            <Overlay> 
+                <h1 className="text-3xl p-4 font-semibold mb-4">Cart</h1>
+                <p className="p-4">Cart is Empty</p>
+            </Overlay>
         );
     }
 

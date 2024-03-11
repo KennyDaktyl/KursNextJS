@@ -32,7 +32,6 @@ export const ProductReview = ({
     const [optimisticRating, setOptimisticRating] = useOptimistic(
         rating,
         (_state, newRating: number) => {
-            console.log(newRating)
             return newRating
         }
       );
@@ -51,10 +50,8 @@ export const ProductReview = ({
     }
 
     const handleIncrementClick = async (_formData: FormData) => {
-        console.log(_formData)
         try {
             const rating = _formData.get("rating");
-            console.log(rating)
             if (typeof rating === 'string') {
                 const parsedRating = parseInt(rating);
                 if (!isNaN(parsedRating)) {

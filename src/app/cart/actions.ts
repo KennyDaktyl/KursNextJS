@@ -70,8 +70,8 @@ export async function handlePaymentSubmitAction() {
             quantity: item.quantity,
         })),
         mode: "payment",
-        success_url: `http://localhost:3000/cart/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `http://localhost:3000/cart/canceled`,
+        success_url: `${process.env.DOMAIN_PATH}cart/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.DOMAIN_PATH}cart/canceled`,
     });
 
     if (!session.url) {

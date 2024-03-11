@@ -39,7 +39,7 @@ export const SearchInput = () => {
                 value={searchQuery}
                 onChange={handleSearchInput}
                 onKeyUp={handleKeyUp}
-                className="bg-white text-gray-700 px-3 py-1 rounded-full focus:outline-none"
+                className="bg-white w-32 text-gray-700 px-3 py-1 rounded-full focus:outline-none"
             />
         </div>
     )

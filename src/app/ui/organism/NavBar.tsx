@@ -3,6 +3,8 @@ import Link from 'next/link';
 
 import { ShoppingCart } from 'lucide-react';
 import { Suspense } from 'react';
+
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { ActiveLink } from "../atoms/ActiveLink";
 import { SearchInput } from '../atoms/searchInput';
 import { GetCartItems } from '@/api/carts';
@@ -47,7 +49,7 @@ export async function NavBar() {
                     <Suspense fallback={<p>Loading data...</p>}>
                         <SearchInput />
                     </Suspense>
-                <div className="flex w-full h-full items-center justify-center">
+                <div className="flex w-full h-full items-center justify-between align-middle">
                     <Link
                         href="/cart"
                         className="w-full h-full group m-2 flex items-center p-2"
@@ -56,6 +58,13 @@ export async function NavBar() {
                         <span className='ml-2 text-sm font-medium'>{ count }</span>
                         <span className='sr-only'></span>
                     </Link>
+                    <SignedIn>
+                        <UserButton
+                            userProfileMode="navigation" />
+                    </SignedIn>
+                    <SignedOut>
+                        <SignInButton />
+                    </SignedOut>
                 </div>
             </div>
         </nav>

@@ -7,7 +7,6 @@ export default async function CartSuccessPage({
 }: {
     searchParams: { session_id?: string }
     }) {
-    console.log("Params" + searchParams.session_id)
     if (!searchParams.session_id) {
         redirect("/")
     };

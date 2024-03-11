@@ -6,7 +6,6 @@ import Stripe from "stripe";
 
 
 export async function POST(request: NextRequest): Promise<Response> {
-    console.log("Prztwarzam")
 
     const body = await request.text();
 
