@@ -1,0 +1,16 @@
+query OrderGetListByEmail(
+	$email: String = ""
+	$take: Int = 10
+	$skip: Int = 0
+) {
+	orders(email: $email, take: $take, skip: $skip) {
+		data {
+			createdAt
+			id
+			lines
+			status
+			totalAmount
+			updatedAt
+		}
+	}
+}

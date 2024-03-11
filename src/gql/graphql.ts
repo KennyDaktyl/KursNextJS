@@ -358,6 +358,15 @@ export type OrderCreateMutationVariables = Exact<{
 
 export type OrderCreateMutation = { cartComplete: { id: string, createdAt: unknown, lines: unknown, status: OrderStatus, totalAmount: number, updatedAt: unknown } };
 
+export type OrderGetListByEmailQueryVariables = Exact<{
+  email?: InputMaybe<Scalars['String']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type OrderGetListByEmailQuery = { orders: { data: Array<{ createdAt: unknown, id: string, lines: unknown, status: OrderStatus, totalAmount: number, updatedAt: unknown }> } };
+
 export type GetProductByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -555,6 +564,20 @@ export const OrderCreateDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<OrderCreateMutation, OrderCreateMutationVariables>;
+export const OrderGetListByEmailDocument = new TypedDocumentString(`
+    query OrderGetListByEmail($email: String = "", $take: Int = 10, $skip: Int = 0) {
+  orders(email: $email, take: $take, skip: $skip) {
+    data {
+      createdAt
+      id
+      lines
+      status
+      totalAmount
+      updatedAt
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<OrderGetListByEmailQuery, OrderGetListByEmailQueryVariables>;
 export const GetProductByIdDocument = new TypedDocumentString(`
     query GetProductById($id: ID!) {
   product(id: $id) {

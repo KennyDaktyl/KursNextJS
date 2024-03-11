@@ -24,7 +24,7 @@ export const SetSortDirection = () => {
     return (
         <div className="flex items-center mb-5">
             <label htmlFor="sort-by-price" className="mr-3">
-                Sort by price:
+                Sort by:
             </label>
             <select 
                 id="sort-by-price"
@@ -32,21 +32,9 @@ export const SetSortDirection = () => {
                 defaultValue={`price, ${order}`}
                 onChange={handleSetOrdering}
             >   
-                <option value="default, asc">--By price--</option>
+                <option value="default, asc">--Sort by--</option>
                 <option data-testid="sort-by-price" value="price, asc">Price asc</option>
                 <option data-testid="sort-by-price" value="price, desc">Price desc</option>
-            </select>
-
-            <label htmlFor="sort-by-rating" className="mr-3">
-                Sort by rating:
-            </label>
-            <select 
-                id="sort-by-rating"
-                className="mr-3"
-                defaultValue={`rating, ${order}`} 
-                onChange={handleSetOrdering}
-            >
-                <option value="default, asc">--By rating--</option>
                 <option data-testid="sort-by-rating" value="rating, asc">Rating asc</option>
                 <option data-testid="sort-by-rating" value="rating, desc">Rating desc</option>
             </select>
