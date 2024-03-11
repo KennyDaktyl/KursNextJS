@@ -22,24 +22,35 @@ export const SetSortDirection = () => {
     };
 
     return (
-        <div className="flex justify-start align-middle mb-5">
+        <div className="flex items-center mb-5">
+            <label htmlFor="sort-by-price" className="mr-3">
+                Sort by price:
+            </label>
             <select 
-                className="mr-5"
-                data-testid="sort-by-price"
+                id="sort-by-price"
+                className="mr-3"
                 defaultValue={`price, ${order}`}
                 onChange={handleSetOrdering}
             >   
-                <option value="price, asc">Price asc</option>
-                <option value="price, desc">Price desc</option>
+                <option value="default, asc">--By price--</option>
+                <option data-testid="sort-by-price" value="price, asc">Price asc</option>
+                <option data-testid="sort-by-price" value="price, desc">Price desc</option>
             </select>
+
+            <label htmlFor="sort-by-rating" className="mr-3">
+                Sort by rating:
+            </label>
             <select 
-                data-testid="sort-by-rating" 
+                id="sort-by-rating"
+                className="mr-3"
                 defaultValue={`rating, ${order}`} 
                 onChange={handleSetOrdering}
-                >
-                <option value="rating, asc">Rating asc</option>
-                <option value="rating, desc">Rating desc</option>
+            >
+                <option value="default, asc">--By rating--</option>
+                <option data-testid="sort-by-rating" value="rating, asc">Rating asc</option>
+                <option data-testid="sort-by-rating" value="rating, desc">Rating desc</option>
             </select>
+
             {order && orderby && (
                 <span className="ml-4">Choice orderby:&nbsp;{orderby}, sort direction:&nbsp;{order}</span>
             )}

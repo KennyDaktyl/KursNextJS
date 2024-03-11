@@ -23,10 +23,12 @@ export const ProductItemDescription = ({
 			<div className="mt-2 flex justify-between">
 				<p className="text-sm text-gray-500 my-1">
 					<span>Rating:&nbsp;</span>
-					<span className="sr-only">Rating:</span> {formatRating(rating)}
+					<span className="sr-only">Rating:</span> 
+					<span data-testid="product-rating">{formatRating(rating)}</span>
 				</p>
 				<p className="text-lg font-medium text-gray-900">
-					<span className="sr-only">Cena:</span> {formatMoney(price / 100)}
+					<span className="sr-only">Cena:</span> 
+					<span data-testid="product-price">{formatMoney(price / 100)}</span>
 				</p>
 			</div>
 		</>
