@@ -29,7 +29,7 @@ export const SetSortDirection = () => {
                 <select 
                     id="sort-by-price"
                     className="mr-3"
-                    defaultValue={`price, ${order}`}
+                    defaultValue={`${orderby}, ${order}`}
                     onChange={handleSetOrdering}
                 >   
                     <option value="default, asc">--Sort by--</option>
