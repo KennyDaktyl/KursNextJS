@@ -40,7 +40,7 @@ export const SetSortDirection = () => {
             </select>
 
             {order && orderby && (
-                <span className="ml-4">Choice orderby:&nbsp;{orderby}, sort direction:&nbsp;{order}</span>
+                <span className="ml-4 w-32">Choice orderby:&nbsp;{orderby}, sort direction:&nbsp;{order}</span>
             )}
         </div>
     );

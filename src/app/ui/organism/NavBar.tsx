@@ -36,10 +36,10 @@ export async function NavBar() {
     }
 
     return (
-        <div className="bg-white md:flex sticky top-0">
+        <div className="bg-white md:flex justify-center sticky top-0">
             <div className="mobile-nav bg-white text-dark overflow-x-auto">
                 <div className="flex justify-between items-center mx-auto max-w-md lg:px-12 lg:max-w-7xl h-full">
-                    <nav role="navigation">
+                    <nav role="navigation mx-auto">
                         <ul className="flex space-x-4 h-full">
                             {NavLinks.map((link, index) => (
                                 <li key={index} className="w-32 text-center border-b-2 border-transparent hover:border-red-500 flex items-center">
@@ -50,7 +50,7 @@ export async function NavBar() {
                     </nav>
                 </div>
             </div>
-            <div className="flex justify-between items-center mx-auto max-w-md sm:px-12 sm:max-w-7xl overflow-x-auto">
+            <div className="flex justify-between items-center overflow-x-auto">
                 <div className="flex items-center ml-2">
                     <Suspense fallback={<p>Loading data...</p>}>
                         <SearchInput />
