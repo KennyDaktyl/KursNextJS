@@ -46,7 +46,7 @@ export default async function SearchProductsPage({ searchParams }: Props) {
     const containerName = "products-list";
 
     return (
-        <section className="mx-auto max-w-screen-2xl p-12">
+        <section className="mx-auto max-w-screen-2xl">
             <p>Search: {query}</p>
             <ProductList products={products} containerName={containerName}/>
         </section>

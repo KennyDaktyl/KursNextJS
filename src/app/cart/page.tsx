@@ -59,13 +59,12 @@ export default async function CartPage() {
 
 
     return (
-        <>
+        <div className="">
             <h1 className="text-3xl font-semibold mb-4">Cart</h1>
-            {/* <Link href="/cart/details">Details</Link> */}
-
             {items.length > 0 ? (
                 <>
-                    <table className="table-fixed mx-auto w-full">
+                <div className="overflow-x-auto">
+                    <table className="lg:table-fixed mx-auto w-full">
                         <thead>
                             <tr>
                                 <th className="px-4 py-2">Product Name</th>
@@ -100,13 +99,15 @@ export default async function CartPage() {
                             ))}
                         </tbody>
                     </table>
-                    <form action={handlePaymentSubmitAction} className="flex justify-start items-center w-full mt-4">
-                        <button className="mt-4 max-w-xs w-full rounded-lg py-2 border hover:bg-slate-800 transition-colors bg-slate-950 text-white shadow">Pay&nbsp;{formatMoney(totalPrice / 100)}</button>
-                    </form>
+                    
+                </div>
+                <form action={handlePaymentSubmitAction} className="flex justify-start items-center w-full mt-4">
+                    <button className="mt-4 max-w-xs w-full rounded-lg py-2 border hover:bg-slate-800 transition-colors bg-slate-950 text-white shadow">Pay&nbsp;{formatMoney(totalPrice / 100)}</button>
+                </form>
                 </>
             ) : (
                     <p>Cart is Empty</p>
             )}
-        </>
+        </div>
     );
 }

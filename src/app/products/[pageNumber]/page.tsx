@@ -77,8 +77,7 @@ export default async function ProductsPage({
     const containerName = "products-list";
 
     return (
-        <>
-            <section className="mx-auto max-w-screen-2xl p-12">
+        <section className="mx-auto max-w-screen-2xl">
                 <SetSortDirection />
                 <ProductList products={products} containerName={containerName} />
                 <Pagination
@@ -87,7 +86,6 @@ export default async function ProductsPage({
                     totalProducts={totalProducts}
                     itemsPerPage={productsPerPage}
                 />
-			</section>
-        </>
+		</section>
     )
 }

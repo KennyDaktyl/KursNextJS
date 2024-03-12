@@ -27,7 +27,7 @@ export const ProductItem = ({
 
     return (
         <li className="cursor-pointer flex justify-center items-center">
-            <ActiveLink role="link" href={href}>
+            <ActiveLink role="link" href={href} exact={true}>
                 <article>
                     <ProductImage 
                         src={ image.url }

@@ -37,7 +37,7 @@ export default async function CollectionProductsPage({
 
     return (
         <>
-            <section className="mx-auto max-w-screen-2xl p-12">
+            <section className="mx-auto max-w-screen-2xl">
                 <h1>
                     Produkty z kolekcji { response.collection.name }
                 </h1>

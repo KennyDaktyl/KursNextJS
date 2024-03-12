@@ -53,7 +53,7 @@ export default async function CategoryProductPage({
     const containerName = "products-list";
     return (
         <>
-            <section className="mx-auto max-w-screen-2xl p-12">
+            <section className="mx-auto max-w-screen-2xl">
                 <h1>
                     { category.name }
                 </h1>

@@ -36,21 +36,27 @@ export async function NavBar() {
     }
 
     return (
-        <div className="bg-white h-60">
-            <div className="flex justify-between items-center mx-auto max-w-md px-12 lg:max-w-7xl h-full">
-                <nav role="navigation">
-                    <ul className="flex space-x-4 h-full">
-                        {NavLinks.map((link, index) => (
-                            <li key={index} className="w-32 text-center border-b-2 border-transparent hover:border-red-500 flex items-center">
-                                <ActiveLink role={link.role} href={link.href} exact={link.exact}>{link.label}</ActiveLink>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
+        <div className="bg-white md:flex sticky top-0">
+            <div className="mobile-nav bg-white text-dark overflow-x-auto">
+                <div className="flex justify-between items-center mx-auto max-w-md lg:px-12 lg:max-w-7xl h-full">
+                    <nav role="navigation">
+                        <ul className="flex space-x-4 h-full">
+                            {NavLinks.map((link, index) => (
+                                <li key={index} className="w-32 text-center border-b-2 border-transparent hover:border-red-500 flex items-center">
+                                    <ActiveLink role={link.role} href={link.href} exact={link.exact}>{link.label}</ActiveLink>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div className="flex justify-between items-center mx-auto max-w-md sm:px-12 sm:max-w-7xl overflow-x-auto">
+                <div className="flex items-center ml-2">
                     <Suspense fallback={<p>Loading data...</p>}>
                         <SearchInput />
                     </Suspense>
-                <div className="ml-2 flex w-full h-full items-center justify-end align-middle">
+                </div>
+                <div className="flex items-center mr-2">
                     <Link
                         href="/cart"
                         className="h-full group m-2 flex items-center p-2"
