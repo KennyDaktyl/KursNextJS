@@ -28,7 +28,7 @@ export const SetSortDirection = () => {
                 </label>
                 <select 
                     id="sort-by-price"
-                    className="mr-3"
+                    className="mr-3 dark:text-gray-800"
                     defaultValue={`${orderby}, ${order}`}
                     onChange={handleSetOrdering}
                 >   

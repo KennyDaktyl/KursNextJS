@@ -36,8 +36,8 @@ export async function NavBar() {
     }
 
     return (
-        <div className="bg-white md:flex justify-center sticky top-0">
-            <div className="mobile-nav bg-white text-dark overflow-x-auto">
+        <div className="bg-white md:flex justify-center sticky top-0 dark:bg-gray-700">
+            <div className="mobile-nav bg-white text-dark overflow-x-auto dark:bg-gray-700 ">
                 <div className="flex justify-between items-center mx-auto max-w-md lg:px-12 lg:max-w-7xl h-full">
                     <nav role="navigation mx-auto">
                         <ul className="flex space-x-4 h-full">

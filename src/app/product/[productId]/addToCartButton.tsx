@@ -9,7 +9,7 @@ export const AddToCartButton = () => {
         <button
             data-testid="add-to-cart-button" 
             disabled={formStatus.pending}
-            className={`py-2 px-6 border rounded-sm shadow-sm bg-slate-300 
+            className={`py-2 px-6 border rounded-sm shadow-sm bg-slate-300 dark:bg-slate-800
                         ${formStatus.pending ? 'cursor-not-allowed' : 'cursor-pointer'}
                         hover:shadow-md transition-shadow`}
         >

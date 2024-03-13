@@ -15,7 +15,7 @@ export function Overlay({children}: {children: React.ReactNode}) {
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 mr-2"
+                        className="h-6 w-6 mr-2 dark:text-gray-800"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -27,7 +27,7 @@ export function Overlay({children}: {children: React.ReactNode}) {
                             d="M15 19l-7-7 7-7"
                         />
                     </svg>
-                Close Modal
+                <span className="dark:text-gray-800">Close Modal</span>
                 </button>
                     {children}
             </aside>

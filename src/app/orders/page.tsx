@@ -55,11 +55,11 @@ export default async function OrderPage() {
           <tbody className="bg-white divide-y divide-gray-200">
             {orders.map((order) => (
               <tr key={order.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{order.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{new Date(order.createdAt as string).toLocaleDateString()}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{order.status}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{formatMoney(order.totalAmount)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{new Date(order.updatedAt as string).toLocaleDateString()}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center dark:text-gray-800">{order.id}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center dark:text-gray-800">{new Date(order.createdAt as string).toLocaleDateString()}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center dark:text-gray-800">{order.status}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center dark:text-gray-800">{formatMoney(order.totalAmount)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center dark:text-gray-800">{new Date(order.updatedAt as string).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>

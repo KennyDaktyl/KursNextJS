@@ -71,35 +71,38 @@ export const ProductReview = ({
         } catch (error) {
             console.error("Error while handling rating:", error);
         }
+        const form = document.getElementById("add-review-form") as HTMLFormElement | null;
+        if (form) {
+            form.reset();
+        }
     }
     
-
     return (
         <>
-             <p className="text-sm text-gray-500 my-3">
+             <p className="text-sm text-gray-500 my-3 dark:text-white">
                 <span>Rating:&nbsp;</span>
                 <span className="sr-only">Rating:</span>
                 {formatRating(optimisticRating)}
                 <small>&nbsp;({optimisticReviews.length})</small>
             </p>
            
-            <form data-testid="add-review-form" id="add-review-form" className="max-w-md my-4">
+            <form data-testid="add-review-form" id="add-review-form" className="max-w-md my-4 dark:text-dark">
                 <input type="hidden" name="productId" value={productId} />
                 <div className="mb-4">
                     <label className="block mb-1" htmlFor="headline">Title:</label>
-                    <input type="text" name="headline" id="headline" className="w-full px-4 py-2 border rounded-md" required />
+                    <input type="text" name="headline" id="headline" className="w-full px-4 py-2 border rounded-md dark:bg-gray-700" required />
                 </div>
                 <div className="mb-4">
                     <label className="block mb-1" htmlFor="name">Name:</label>
-                    <input type="text" name="name" id="name" className="w-full px-4 py-2 border rounded-md" required />
+                    <input type="text" name="name" id="name" className="w-full px-4 py-2 border rounded-md dark:bg-gray-700" required />
                 </div>
                 <div className="mb-4">
                     <label className="block mb-1" htmlFor="content">Content:</label>
-                    <textarea name="content" id="content" className="w-full px-4 py-2 border rounded-md" required />
+                    <textarea name="content" id="content" className="w-full px-4 py-2 border rounded-md dark:bg-gray-700" required />
                 </div>
                 <div className="mb-4">
                     <label className="block mb-1" htmlFor="review">Rating:</label>
-                    <select name="rating" id="rating" className="w-full px-4 py-2 border rounded-md" required >
+                    <select name="rating" id="rating" className="w-full px-4 py-2 border rounded-md dark:bg-gray-700" required >
                         <option value="">Select Rating</option>
                         {[1, 2, 3, 4, 5].map((rating) => (
                             <option key={rating} value={rating}>{rating}</option>
@@ -108,14 +111,14 @@ export const ProductReview = ({
                 </div>
                 <div className="mb-4">
                     <label className="block mb-1" htmlFor="email">Email:</label>
-                    <input type="email" name="email" id="email" className="w-full px-4 py-2 border rounded-md" required />
+                    <input type="email" name="email" id="email" className="w-full px-4 py-2 border rounded-md dark:bg-gray-700" required />
                 </div>
                 
                 
                 <button
                     disabled={formStatus.pending}
                     formAction={handleIncrementClick}
-                    className={`py-2 px-6 border rounded-sm shadow-sm bg-slate-300 
+                    className={`py-2 px-6 border rounded-sm shadow-sm bg-slate-300 dark:bg-slate-800
                                 ${formStatus.pending ? 'cursor-not-allowed' : 'cursor-pointer'}
                                 hover:shadow-md transition-shadow`}>
                     Submit Review

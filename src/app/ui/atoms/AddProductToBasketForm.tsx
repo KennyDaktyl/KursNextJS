@@ -38,7 +38,7 @@ export const AddProductToBasketForm = ({
                     min={1}
                     value={quantity}
                     onChange={(e) => setQuantity(Math.max(parseInt(e.target.value), 1))}
-                    className="text-center w-16"
+                    className="text-center w-16 bg-white dark:bg-gray-800 text-black dark:text-white"
                     readOnly
                 />
                 <button

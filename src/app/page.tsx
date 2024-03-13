@@ -27,12 +27,12 @@ export default async function Home() {
                     {response.data.map(collection => (
                         <li key={collection.id} className="p-2 flex justify-start align-middle flex-wrap">
                             <Link
-								className="w-full mx-auto text-gray-800 font-bold line-h-20 hover:text-gray-600" 
+								className="w-full mx-auto text-gray-800 font-bold line-h-20 hover:text-gray-600 dark:text-white" 
 								role="link" 
 								href={`/collections/${collection.slug}`} >
                                 {collection.name}
                             </Link>
-                            <span>{ collection.description }</span>
+                            <span className="dark:text-white">{ collection.description }</span>
                         </li>
                     ))}
                 </ul>

@@ -15,9 +15,9 @@ export const ProductDetails = ({
 }) => {
     return (
         <>
-            <h1 role="heading" className="text-4xl">{name}</h1>
-            <p className="text-md font-medium text-gray-900 my-3">
-                <span className="sr-only">Price:</span>
+            <h1 role="heading" className="text-4xl dark:text-white">{name}</h1>
+            <p className="text-md font-medium text-gray-900 my-3 dark:text-white">
+                <span className="sr-only  ">Price:</span>
                 {formatMoney(price / 100)}
             </p>
             <p className="text-sm text-gray-500 my-3">

@@ -64,13 +64,14 @@ export default async function CartPage() {
             {items.length > 0 ? (
                 <>
                 <div className="overflow-x-auto">
-                    <table className="lg:table-fixed mx-auto w-full">
+                    <table className="table-fixed mx-auto w-full">
                         <thead>
                             <tr>
-                                <th className="px-4 py-2">Product Name</th>
-                                <th className="px-4 py-2">Price</th>
-                                <th className="px-4 py-2">Quantity</th>
-                                <th className="px-4 py-2">Total</th>
+                                <th className="px-4 py-2 w-32 h32">Image</th>
+                                <th className="px-4 py-2 w-64">Product Name</th>
+                                <th className="px-4 py-2 w-32">Price</th>
+                                <th className="px-4 py-2 w-32">Quantity</th>
+                                <th className="px-4 py-2 w-32">Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,7 +82,7 @@ export default async function CartPage() {
                                             alt={ item.product.images[0].alt } 
                                     />
                                     </td>
-                                    <td className="border px-4 py-2 w-96 text-lg">
+                                    <td className="border px-4 py-2 w-96 text-lg w-32">
                                         <Link
                                             href={`/product/${item.product.id}`}
                                             className="hover:text-gray-600"

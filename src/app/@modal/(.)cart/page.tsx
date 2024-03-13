@@ -60,9 +60,9 @@ export default async function ModalCart() {
                             />
                         </div>
                         <div className="flex flex-col">
-                            <h3 className="text-lg font-semibold">{item.product?.name}</h3>
-                            <p className="text-sm text-gray-600">{item.quantity}x</p>
-                            <p className="text-sm font-semibold">{formatMoney(item.product.price / 100)}</p>
+                            <h3 className="text-lg font-semibold  dark:text-gray-800">{item.product?.name}</h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-800">{item.quantity}x</p>
+                            <p className="text-sm font-semibold dark:text-gray-800">{formatMoney(item.product.price / 100)}</p>
                         </div>
                     </li>
                 ))}
