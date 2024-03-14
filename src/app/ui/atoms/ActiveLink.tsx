@@ -27,8 +27,8 @@ export const ActiveLink = ({ href, role, children, exact = false }: ActiveLinkPr
         <Link
             href={resolvedHref}
             role={role}
-            className={clsx('mx-auto text-gray-800 font-bold h-full w-full line-h-60 hover:text-zinc-100 dark:text-zinc-50', 
-                isActive && 'text-white dark:dark:bg-gray-700 dark:text-zinc-50 rounded-2xl underline bg-slate-50 border-red-500')}
+            className={clsx('mx-auto text-gray-800 font-bold h-full w-full line-h-60 hover:text-gray-950 dark:hover:text-zinc-100 dark:text-zinc-50', 
+                isActive && 'text-gray-950 dark:text-white dark:dark:bg-gray-700 dark:text-zinc-50 rounded-2xl underline bg-slate-50 border-red-500')}
             aria-current={isActive ? 'page' : undefined}
             >
                 {children}{isActive}
